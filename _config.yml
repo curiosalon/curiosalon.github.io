@@ -86,10 +86,10 @@ footer:
       url: "https://twitter.com/MuseumCurio"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://github.com/curiosalon"
+    - label: "Youtube"
+      icon: "fab fa-fw fa-youtube"
+      url: "https://www.youtube.com/channel/UCBbmGiSdqsVE81tryXi8DIA"
 
 defaults:
   # _posts
