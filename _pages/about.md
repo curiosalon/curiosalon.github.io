@@ -7,8 +7,8 @@ So it's late at night, 3:20 AM to be exact as I type these words and I've been
 trying to think of what to put here.  Well, late nights are hardly something
 that is new for me.  I've had a bizarre sleep schedule for over a decade now
 and tonight is no exception. So in my attempt to introduce myself via this 
-About section of this hole in the wall of a website, I think it make sense to
-share a little bit about what the world is like for me as I write.
+About section of this hole in the wall of a website, I think it makes sense to
+share a bit about what the world is like for me as I write.
 
 
 My desk is cluttered with miscellaneous accoutrements of the computer nerd.
@@ -22,10 +22,10 @@ projects or generally goof around.
 
 
 Also on the desk, besides the mouse and keyboard with which I type these words
-is small bottle of antacid tablets for my semi regular indigestion and some
+is a small bottle of antacid tablets for my semi regular indigestion and some
 eye drops for an odd medical condition I've experienced with one of my eyes
 over the last year or two. The eye thing is better now, I think, but I keep
-eyedrops around incase it comes back. Under the antacid tablets I see a
+eye drops around incase it comes back. Under the antacid tablets I see a
 card that my elderly father wrote for me last christmas (it's April now and 
 the card won't be leaving the desk any time soon).  The card reads:
 
@@ -43,7 +43,7 @@ appreciation of it.
 
 Huh. When I started writing this page, I didn't really know where this was
 going to go but yeah, this is what it is and I'm going to go with it. I see
-this website as a way for me to share a little bit of my life and create
-hopefully a bit of income down the road but for now, as I write, it's a way
+this website as a way for me to share a bit of my life and create hopefully
+a bit of income down the road but for now, as I write, it's a way
 for me to say I love you too Dad.
 
