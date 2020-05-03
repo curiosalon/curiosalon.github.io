@@ -9,17 +9,17 @@ tags:
   - FFMPEG
 ---
 
+Before I dive into the topic of alpha channel masking in ffmpeg, I should
+explain what this document is.  I'm writing it as a blog post however,
+I want it to document what I know about how alpha masking is accomplished in
+FFMPEG.
+
 **Warning:** Video examples in this post use VP9 with an Alpha channel. At the
 time of writing, only Firefox and Chrome based browsers will support the
 content.  **Edge** users (as of April 12, 2020) will see the video but will
 not see the alpha channel. **Safari** users will need to convert the videos to
 H.265 somehow to get the equivalent effect.
 {: .notice--warning}
-
-Before I dive into the topic of alpha channel masking in ffmpeg, I should
-explain what this document is.  I'm writing it as a blog post however,
-I want it to document what I know about how alpha masking is accomplished in
-FFMPEG.
 
 <video width="100%" autoplay="autoplay" loop="loop">
     <source src="/assets/images/timer.webm" type="video/webm">
@@ -99,6 +99,10 @@ different video and audio formats.  For instance the prolific h.264 format,
 can easily be stored in any of the containers listed above. Software support
 for all the various containers is extremely mixed. Even worse is the support
 for the actual formats themselves.
+
+{% include figure image_path="/assets/images/alpha-blending-guide.png"
+alt="Take this it's dangerous out there"
+caption="Take this it's dangerous out there" %}
 
 ## Alpha channel support in video codecs
 
