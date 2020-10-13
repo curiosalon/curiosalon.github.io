@@ -1,6 +1,7 @@
 ---
 title: "Alpha Masking with FFMPEG"
 date: 2020-04-23
+last_modified_at: 2020-05-19T16:20:02-05:00
 toc: true
 toc_sticky: true
 categories:
@@ -96,7 +97,7 @@ started having these issues.
 There are *LOTS* of different container formats these days (.mov, .mp4, .mkv,
 .webm, .flv and many others). Most containers can store a massive variety of
 different video and audio formats.  For instance the prolific h.264 format,
-can easily be stored in any of the containers listed above. Software support
+can easily be stored in most of the containers listed above. Software support
 for all the various containers is extremely mixed. Even worse is the support
 for the actual formats themselves.
 
@@ -172,7 +173,9 @@ would be happy to be proven wrong about this.
 
 Currently there is no widely available distribution type codec that supports
 an alpha channel that works across all devices but VP9 does have a massive
-adoption base from all recent versions of Chrome and Firefox.
+adoption base from all recent versions of Chrome and Firefox.  Presumably,
+since Edge already supports VP9 it will add alpha channel support at some 
+point in the future, but today it does not support VP9 alpha blending.
 
 ### Codec Choices Summary
 
