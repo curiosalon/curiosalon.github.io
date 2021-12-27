@@ -15,3 +15,10 @@ group :jekyll_plugins do
   gem "jekyll-include-cache"
   gem "jekyll-algolia"
 end
+
+# Added since these seem necessary on OpenBSD with ruby >= 3
+gem "webrick"
+if RbConfig::CONFIG['target_os'] =~ /(?i-mx:bsd|dragonfly)/
+  gem 'rb-kqueue', '>= 0.2'
+end
+
