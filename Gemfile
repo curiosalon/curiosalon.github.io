@@ -15,9 +15,7 @@ group :jekyll_plugins do
   gem "jekyll-include-cache", "~> 0.2"
 end
 
-# Added since these seem necessary on OpenBSD with ruby >= 3
-gem "webrick"
+# Native file watching on BSD
 if RbConfig::CONFIG['target_os'] =~ /(?i-mx:bsd|dragonfly)/
   gem 'rb-kqueue', '>= 0.2'
 end
-
