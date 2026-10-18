@@ -14,3 +14,10 @@ group :jekyll_plugins do
   gem "jemoji", "~> 0.13"
   gem "jekyll-include-cache", "~> 0.2"
 end
+
+# Added since these seem necessary on OpenBSD with ruby >= 3
+gem "webrick"
+if RbConfig::CONFIG['target_os'] =~ /(?i-mx:bsd|dragonfly)/
+  gem 'rb-kqueue', '>= 0.2'
+end
+
