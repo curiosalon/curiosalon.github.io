@@ -26,13 +26,13 @@ search: true
 
 # Build settings
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
+theme: minimal-mistakes-jekyll
 locale: "en"
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/Denver
 
 repository: curiosalon/curiosalon.github.io
 url: "https://curiosalon.github.io"
@@ -43,9 +43,8 @@ include:
 analytics:
   provider: "google-gtag"
   google:
-    tracking_id: "UA-163721199-1"
-    anonymize_ip: false # default
-
+    tracking_id: "G-CDHQJ8XG0Y"
+    anonymize_ip: true
 google_site_verification: "A4sV0DIRlsriryesXgHP8ySFHyIAWZJSA35lrCDc1_I"
 
 
@@ -126,3 +125,10 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - scripts
+  - vendor
