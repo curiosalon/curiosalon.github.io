@@ -18,11 +18,13 @@ title_separator: "|"
 subtitle: "Art, Tech, and Curious Engineering"
 email: curiomuseum@outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Considerations about artistic and practical inventions
+  Retro computing, digital art, and practical tutorials: explore vintage hardware, FFmpeg video effects, and troubleshooting experiments.
 twitter_username: curiomuseum
 github_username: curiosalon
 minimal_mistakes_skin: sunrise
 search: true
+og_image: /assets/images/vi-domina-header.png
+og_image_alt: "Geometric illustration of Vi Domina"
 
 # Build settings
 markdown: kramdown
@@ -106,6 +108,7 @@ defaults:
       type: posts
     values:
       layout: single
+      classes: wide
       author_profile: true
       read_time: true
       comments: true

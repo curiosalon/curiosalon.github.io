@@ -1,6 +1,7 @@
 ---
-title: "OpenBSD 7.0 won't boot on SunBlade 100"
-excerpt_separator: "<!--more-->"
+title: "OpenBSD on SunBlade 100: IDE boot failure and workaround"
+excerpt: "A technical guide to an OpenBSD boot failure on the SunBlade 100: the firmware limitation, the bisection process, and the historical IDE-write workaround."
+last_modified_at: 2026-10-18
 toc: true
 toc_sticky: true
 categories:
@@ -9,183 +10,89 @@ tags:
   - SunBlade 100
 ---
 
-What follows is a summary and outcome from a severe data corruption bug I
-encountered when installing OpenBSD on my SunBlade 100 SPARC64 workstation.
-"Severe" is subjective, like this a problem that only impacts 20-year-old
-big-endian sparc64 computers booting from an obsolete boot medium.
-<!--more-->
+An OpenBSD installation on a SunBlade 100 can complete successfully yet fail at
+the first boot when the bootloader writes to an IDE disk through OpenBoot
+firmware. This article documents the historical failure investigated around
+OpenBSD 7.0 and the bootloader workaround committed in December 2021.
 
-To summarize, the OS would install, things seemed super duper until booting
-for the first time. Suddenly it was an apocalypse, cats and dogs living
-together, mass hysteria, and what's worse, the computer wouldn't start!
+**Historical context:** The commands and patch below describe that investigation.
+They have not been re-tested against current OpenBSD releases. The patch is a
+record of the fix, not an instruction to apply it to a current source tree.
+{: .notice--info}
 
-Here is the story of the fix(?) and my first patch for OpenBSD.
+## The failure and its cause
 
-## There's a bug in my UNIX
+On affected systems, a bootloader call to `fchmod` attempted to mark an old random
+seed as stale. Writing through the OpenBoot IDE driver could corrupt disk data,
+preventing the system from booting. The failure occurred after installation,
+before the operating system's own drivers took control.
 
-Time for some sweet UNIX bug investigation.
+The workaround disables these bootloader write operations for IDE devices. It
+does not repair the firmware itself. The investigation distinguished this IDE
+path from the SCSI path used on other SPARC64 systems.
 
+## OpenBSD SPARC64 boot process
 
-The fun started with designing a replacement to the NVRAM IDPROM chip that Sun
-used to keep track of important things like the computer serial number. Before
-this work was complete, the SunBlade sat lonesome in a corner. Because of this
-system's design, it isn't possible to go to the computer store and buy a new
-NVRAM chip and get the machine booted again (I have a solution available to
-this coming soon). The machine languished for several years un-started until I
-had completed and manufactured a prototype IDPROM replacement.
+The boot sequence has three stages:
 
-Sitting unused is bad mojo; operating systems have a way of subtly breaking on
-equipment that isn't regularly in use. This computer was already well over a
-decade old by the time the battery in the IPROM chip drained, most users of
-the machine had moved on to newer and shinier toys.
+1. OpenBoot loads the first-stage boot block, written in Forth.
+2. That block loads the second-stage bootloader, written in C. This loader uses
+   firmware services to access storage, prepare seed entropy, and load the kernel.
+3. The kernel starts and takes over with its own device drivers.
 
-The last version of OpenBSD I knew of that worked on the SunBlade 100 was
-version 6.3 because that is the version installed when the NVRAM chip died.
-Released Apr 15, 2018, this meant that by the time I started testing the
-computer again in September 2021, over three years of changes were introduced
-to the operating system. Sure enough, version 7.0 would refuse to boot.
+This distinction matters: a disk may work during installation and still fail
+when the bootloader accesses it through firmware services.
 
-Bug report sent, and of course, the developers aren't using this equipment
-anymore.  They have no way (or interest) in fixing the problems impacting this
-older device. I realized the only person interested in finding the problem(s)
-was me.
+## Isolating the regression
 
-### OpenBSD SPARC64 boot process
+The historical investigation used source bisection: rebuild the bootloader from
+different source dates, then check which version introduces the failure.
+OpenBSD 6.7's `ofwboot` provided a working bootloader for starting an otherwise
+unbootable installation during that process.
 
-OpenBSD boots on SPARC64 computers using the onboard OpenBoot Firmware
-built-in functions to access IO devices.
-[OpenBoot Firmware](https://github.com/openbios/openboot) archives are
-available on GitHub for anyone interested in how it works.
+The key observations were:
 
-The developers didn't know which specific change had caused the system to no
-longer boot, but they did have some suspected files to investigate.  On
-SPARC64, the OpenBSD boot process occurs in three steps.
+| Source point | Result |
+| --- | --- |
+| June 5, 2020 | Boot failure |
+| June 1, 2020 | Boot failure |
+| May 28, 2020 | Boot failure |
+| May 27, 2020 | Boot failure |
+| May 26, 2020, 16:29 UTC | Boots |
+| May 26, 2020, 16:35 UTC | Boot failure |
 
-1.  OpenFirmware loads the first stage boot block (written in the Forth
-    language); this program directs the loading of the second stage binary
-    boot block.
-2.  The second stage boot block (written in C) talks to the OpenFirmware to
-    prepare the environment for loading the OpenBSD kernel. This program is
-    responsible for (among other tasks) priming seed entropy and loading the
-    kernel itself for execution.
-3.  The kernel finally loads and has access to all drivers and IO devices.
+The boundary identified the `fchmod` call in
+`sys/arch/sparc64/stand/ofwboot/boot.c` as the trigger.
 
-OpenFirmware handles all IO interactions until the kernel is running. If there
-is a problem with the firmware code, there aren't many options for remediation
-now.  The SunBlade 100 ended its service life in February 2008, so the vendor
-will no longer fix any problems. The other option is debugging the Forth Fcode
-drivers in the OpenBoot firmware.
+### Historical build procedure
 
-### Finding the bug
+The investigation used a separate machine to serve dated OpenBSD source over
+NFS, and a network installation environment to recover from failed boot tests.
+On the test workstation, the source tree was mounted at `/usr/src` and the
+bootloader was rebuilt with:
 
-I used a process known as bisection to identify the change causing the boot
-process to fail. This process was tedious because every failed attempt
-required installing an entirely new copy of the operating system. I learned
-that the bug impacted versions immediately after 6.7. The methodology I used
-was as follows:
-
-1.  Configure a network boot environment to deploy OpenBSD
-2.  On a separate machine, download the OpenBSD source code using the CVS
-    command:
-    ```
-    cvs -q checkout -PD"<date>" src
-    ```
-3.  Enable a network file server (NFS) on this separate machine.
-	1.  Share the directory containing the newly downloaded source code.
-	2.  Update the source code to a specific date using the CVS command:
-	    ```
-        cvs -q up -PdD"2020-05-26 16:35 UTC"
-        ```
-4.  Install current OpenBSD snapshot
-5.  Before the first boot, switch to shell access and download the file
-    `ofwboot` from [FTP](https://cdn.openbsd.org/pub/OpenBSD/6.7/sparc64/).
-6.  Replace the ofwboot file on the new root filesystem located on the `/mnt`
-    filesystem.
-7.  Boot the newly installed Operating System and login as *root*.
-8.  Dismount the default source code filesystem on `/usr/src` using
-    ```
-    umount /usr/src
-    ```
-9.  Mount the source code directory using:
-    ```
-    mount <NFSPATH> /usr/src
-    ```
-10. Change the working directory using:
-    ```
-    cd /usr/src/sys
-    ```
-11. Prestage the object directories:
-    ```
-    make obj
-    ```
-12. Change the working directory with:
-    ```
-    cd arch/sparc64/stand
-    ```
-13. run the commands:
-    ```
-    make
-    make install
-    installboot -v wd0
-    ```
-14. Reboot and determine if the problem appears
-	1. If the boot fails, repeat Step 4 and choose an earlier date.
-	2. If the boot is successful, repeat Step 4 and skip step 5.
-15. Stop after finding the precise date and change that caused the fault.
-
-### Work Log
-
-The following work log shows the bisection process:
-```
-Checking "2020-06-05 09:15 UTC"
-- This patch is just before Otto introduced bootblock 2.1
-Result : Failure, fault introduced before this change
-----
-Bisecting date between 2020-06-05 and 2020-05-26
-Checking 2020-06-01
-Result : Failure, fault introduced before this date
-----
-Bisecting date between 2020-05-26 and 2020-06-01
-Checking 2020-05-28
-Result : Failure, fault introduced before this date
-----
-Bisecting date between 2020-05-26 and 2020-05-28
-Checking 2020-05-27
-Result : Failure, fault introduced before this date
-----
-Resetting to 2020-05-26
-Checking 2020-05-26
-Result : Boots
-----
-Updating to "2020-05-26 16:29 UTC"
-Result : Boots
-----
-Updating to "2020-05-26 16:35 UTC"
-Result : Fault
------
-The problem for this machine is triggered by a call to fchmod in
-sys/arch/sparc64/stand/ofwboot/boot.c
+```sh
+cd /usr/src/sys
+make obj
+cd arch/sparc64/stand
+make
+make install
+installboot -v wd0
 ```
 
-I determined that a function call named `fchmod` was causing the problem! It
-turns out that the OpenBSD developers wanted a way to signal whether the
-computer was booting with old random entropy seeds from a previous boot cycle.
-They used the `fchmod` function to mark this entropy data as stale.
-Unfortunately, for older systems, like the SunBlade 100, there appears to be a
-bug in the OpenBoot Firmware that causes writing operations to fail to write
-data on legacy IDE hard drives. _Modern_ systems that use SCSI hard drives do
-not have this problem.
+These commands write boot code to the selected disk. `wd0` was the disk used in
+the historical procedure; it is not a universally correct target. Reproducing
+this investigation requires a recoverable test installation and backups.
 
-## The Fix
+## The workaround
 
-I designed a source code patch to the binary second stage boot block that
-causes the `fchmod` function to ignore the write operation when the computer
-boots from an IDE hard drive. The change was committed to the OpenBSD tree via
-Mark Kettenis.
+The December 2021 patch checks the parent device type when opening a disk. If
+that parent is an IDE device, the loader adds `F_NOWRITE` to the file flags.
+The standalone `fchmod` implementation then returns `EOPNOTSUPP` rather than
+attempting a write.
 
-It's worth pointing out that this doesn't actually fix the problem with the
-OpenBoot IDE driver. For that we'd have to enter the mystical land of fcode
-debugging. Until then here is the boot code workaround for IDE drives:
+The change was committed to OpenBSD by Mark Kettenis. The historical diff below
+preserves the source revision information and implementation for reference.
 
 ```
 diff --git a/sys/arch/sparc64/stand/ofwboot/ofdev.c b/sys/arch/sparc64/stand/ofwboot/ofdev.c

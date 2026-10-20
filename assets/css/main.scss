@@ -1,0 +1,13 @@
+---
+search: false
+---
+@charset "utf-8";
+// Set only the accessibility adjustments; inherit the complete theme below.
+$primary-color: #a51b37;
+$link-color: #a51b37;
+$link-color-hover: #76132a;
+$link-color-visited: #66254f;
+$base08: #d16c6c;
+$base0f: #bd8c7c;
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
+@import "minimal-mistakes";

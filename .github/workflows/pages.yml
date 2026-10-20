@@ -21,6 +21,8 @@ jobs:
         run: bundle exec jekyll build --trace
         env:
           JEKYLL_ENV: production
+      - name: Check generated pages
+        run: python3 scripts/check-site.py _site
       - uses: actions/upload-pages-artifact@v5.0.0
   deploy:
     if: github.event_name != 'pull_request'

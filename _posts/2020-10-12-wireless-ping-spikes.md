@@ -1,6 +1,11 @@
 ---
+excerpt: "Investigating periodic Wi-Fi latency spikes on Windows 10, with ping tests and a WLAN autoconfig workaround, including its connection trade-offs."
+header:
+  og_image: /assets/images/ping-spike.png
+  og_image_alt: "Ping output showing intermittent wireless latency"
 title: "Wireless Ping Spikes on Windows 10"
 excerpt_separator: "<!--more-->"
+tags: [Windows, Networking]
 categories:
   - Blog
 ---
@@ -15,8 +20,9 @@ network connection starts stuttering every 4-5 seconds.  Packets aren't
 usually lost, just the network adapter seems to hang for a second then resume
 normal operation for moment, then stutter again.
 
-<video width="100%" autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="720" height="500" aria-label="Demonstration: ping spike">
     <source src="/assets/images/ping-spike.webm" type="video/webm">
+    <a href="/assets/images/ping-spike.webm">Download this video demonstration</a>
 </video>
 
 <!--more-->
@@ -35,8 +41,9 @@ adapter and both are from commodity equipment vendors with a vintage of around 2
 When the system is running correctly (which is usually the case) a simple 
 ping test will usually look like this:
 
-<video width="100%" autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="720" height="500" aria-label="Demonstration: no ping spikes">
     <source src="/assets/images/no-ping-spikes.webm" type="video/webm">
+    <a href="/assets/images/no-ping-spikes.webm">Download this video demonstration</a>
 </video>
 
 **Note:** I am running the ping to the IP of my wireless router rather than
@@ -50,7 +57,7 @@ Hitting google with a quick search shows plenty of people have been
 experiencing very similar issues going back right to the original deployment
 of Windows 10.
 
-{% include figure image_path="/assets/images/ping-spike-search.png"
+{% include media-figure.html image_path="/assets/images/ping-spike-search.png"
 alt="I'm not the only one, other people have ping spike problems"
 caption="I'm not the only one, other people have ping spike problems" %}
 
@@ -70,7 +77,7 @@ it's Wi-Fi as indicated looking through Network Connections. Mine is bridged
 since I sometimes like to plug in physically networked machines into the my
 wifi network (removing the bridge doesn't solve the issue, I've tested).
 
-{% include figure image_path="/assets/images/network-adapter.png"
+{% include media-figure.html image_path="/assets/images/network-adapter.png"
 alt="Identifying the wireless network adapter"
 caption="Identifying the wireless network adapter" %}
 
@@ -85,6 +92,24 @@ From here my pings return to normal but I'm not longer able to search for
 new wireless networks, nor am I able to rejoin my normal wireless network
 without temporarily re-enabling autoconfig for the interface.
 
+### Restore normal Wi-Fi behavior
+
+Run this from an Administrator Command Prompt when you finish the experiment:
+
+```bat
+netsh wlan set autoconfig enabled=yes interface="Wi-Fi"
+```
+
+Use your adapter's actual name in both commands. This is an interface-level
+setting, not an instruction to disable the WLAN AutoConfig service.
+Microsoft documents that disabling autoconfiguration prevents automatic
+connections on that interface. See the [official netsh wlan reference](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-wlan).
+
+**Scope:** These observations are from Windows 10 in October 2020; the driver and
+OS build were not recorded. The command syntax was checked against Microsoft's
+documentation in October 2026, but the network workaround was not re-tested.
+{: .notice--info}
+
 ## Permanent solution for Ping Spikes?
 
 Well, at the moment (October 2020) I don't have a solution that is permanent
@@ -93,6 +118,5 @@ rather than user error since the computer works completely fine most of the
 time, but it's also been a long standing issue and I hope that someone will
 look into it.
 
-If people want to reach out to me my contact information is listed on the
-left and I'm happy to test or experiment with my setup here.
+For more experiments, [browse the troubleshooting topics](/tags/#networking).
 

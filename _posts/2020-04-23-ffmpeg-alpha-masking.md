@@ -1,11 +1,16 @@
 ---
+excerpt: "Create transparent video overlays with FFmpeg: explore alpha channels, choose codecs, draw masks, and build a circular map overlay step by step."
+header:
+  og_image: /assets/images/wiz7-phoonzang-statue.jpg
+  og_image_alt: "Wizardry 7 gameplay with a composited map overlay"
 title: "Alpha Masking with FFMPEG"
 date: 2020-04-23
-last_modified_at: 2020-05-19T16:20:02-05:00
+last_modified_at: 2026-10-18
+math: true
 toc: true
 toc_sticky: true
 categories:
-  - blog
+  - Blog
 tags:
   - FFMPEG
 ---
@@ -15,15 +20,27 @@ explain what this document is.  I'm writing it as a blog post however,
 I want it to document what I know about how alpha masking is accomplished in
 FFMPEG.
 
-**Warning:** Video examples in this post use VP9 with an Alpha channel. At the
-time of writing, only Firefox and Chrome based browsers will support the
-content.  **Edge** users (as of April 12, 2020) will see the video but will
-not see the alpha channel. **Safari** users will need to convert the videos to
-H.265 somehow to get the equivalent effect.
-{: .notice--warning}
+**Review note (October 2026):** This tutorial began in April 2020. Its codec
+comparison tables record the original observations and are not current support
+matrices. The original tests did not record an FFmpeg version. The command examples
+have now been checked with the locally installed FFmpeg 4.3.1; this does not establish
+compatibility with every current build, editor, or browser.
+{: .notice--info}
 
-<video width="100%" autoplay="autoplay" loop="loop">
+The examples use Windows **Command Prompt** syntax: `^` continues a command onto
+the next line. In a `.bat` file, double the `%` in image-sequence patterns
+(`timer%%04d.tif`). PowerShell and Unix shells use different continuation syntax.
+Your FFmpeg build needs the `libvpx-vp9` and `prores_ks` encoders for the respective
+examples. Check with `ffmpeg -encoders`.
+
+The embedded demonstrations use WebM with alpha transparency. Playback and alpha
+compositing are separate capabilities: if an example appears opaque, that does not
+prove its alpha channel is absent. Test your intended browser/editor rather than
+relying on the 2020 platform assumptions below.
+
+<video controls muted playsinline loop preload="none" width="300" height="300" aria-label="Demonstration: timer">
     <source src="/assets/images/timer.webm" type="video/webm">
+    <a href="/assets/images/timer.webm">Download this video demonstration</a>
 </video>
 
 ## Basics of Alpha Channel
@@ -100,7 +117,7 @@ can easily be stored in most of the containers listed above. Software support
 for all the various containers is extremely mixed. Even worse is the support
 for the actual formats themselves.
 
-{% include figure image_path="/assets/images/alpha-blending-guide.png"
+{% include media-figure.html image_path="/assets/images/alpha-blending-guide.png"
 alt="Take this it's dangerous out there"
 caption="Take this it's dangerous out there" %}
 
@@ -135,9 +152,10 @@ of requiring extra computation time to render each individual frame.
 | **TIFF**       | Full     | Full    | Full     | Full    |
 
 
-**Warning:** ProRes4444 export from Davinci Resolve is
-[only supported](https://t.co/qOCuIOJLv6) on linux and Mac platforms (at time
-of writing, April 2020).
+**Historical note:** The following discussion reflects the original Resolve 16.2
+workflow. ProRes availability has changed since then; consult Blackmagic Design's
+[Resolve 20 codec matrix](https://documents.blackmagicdesign.com/SupportNotes/DaVinci_Resolve_20_Supported_Codec_List.pdf)
+for platform and edition-specific capabilities.
 {: .notice--warning}
 
 ProRes4444 is probably the most widely supported intermediate stage codec, but
@@ -170,11 +188,8 @@ but now it does not support alpha channel to my knowledge, though I
 would be happy to be proven wrong about this.
 {: .notice--info}
 
-Currently there is no widely available distribution type codec that supports
-an alpha channel that works across all devices but VP9 does have a massive
-adoption base from all recent versions of Chrome and Firefox.  Presumably,
-since Edge already supports VP9 it will add alpha channel support at some 
-point in the future, but today it does not support VP9 alpha blending.
+These were the cross-platform limitations encountered in April 2020. They should
+not be treated as a current browser support statement.
 
 ### Codec Choices Summary
 
@@ -184,10 +199,8 @@ However, using sequences of compressed TIFF images is completely supported
 in every editing tool and is probably the best way to store intermediate video
 content for later editing if maintaining an Alpha Channel is important
 
-For archiving and web purposes VP9 can be used in every modern version of
-Firefox and Chrome, and has official (but not bundled by default) support from
-Microsoft. Apple users can use H.265 but toolchain support for creating those
-videos with Alpha Channel is very thin now.
+For a new project, test a short alpha sample in your exact delivery environment
+before choosing an editing or distribution format.
 
 ## Practical Examples of Alpha Channel Video
 
@@ -198,7 +211,7 @@ will dive into animating and masking existing videos with ffmpeg.
 
 ### Using FFMPEG to Encode VP9 with Alpha Channel
 
-{% include figure image_path="/assets/images/davinci-resolve-alpha-export.png"
+{% include media-figure.html image_path="/assets/images/davinci-resolve-alpha-export.png"
 alt="Export Fusion animation to TIFF with Alpha Channel"
 caption="Export Fusion animation to TIFF with Alpha Channel" %}
 
@@ -210,7 +223,7 @@ The common format for storing VP9 video is in the webm container and you can
 instruct ffmpeg to create a rough video with instructions like the following:
 
 ```
-ffmpeg -i timer%04d.tif -r 30 -c:v vp9 -pix_fmt yuva420p timer.webm
+ffmpeg -framerate 30 -i timer%04d.tif -c:v libvpx-vp9 -pix_fmt yuva420p timer.webm
 ```
 
 | Name        | Required   | Description                                     |
@@ -224,8 +237,8 @@ You could choose to run 2 passes on the source material to create a slightly
 higher quality final product like this (on Windows):
 
 ```
-ffmpeg -r 30 -i timer%04d.tif -c:v vp9 -pass 1 -pix_fmt yuva420p -f webm NUL
-ffmpeg -r 30 -i timer%04d.tif -c:v vp9 -pass 2 -pix_fmt yuva420p timer.webm
+ffmpeg -framerate 30 -i timer%04d.tif -c:v libvpx-vp9 -pass 1 -pix_fmt yuva420p -f webm NUL
+ffmpeg -framerate 30 -i timer%04d.tif -c:v libvpx-vp9 -pass 2 -pix_fmt yuva420p timer.webm
 ```
 
 ### Using FFMPEG to Encode ProRes4444 with Alpha Channel
@@ -235,7 +248,7 @@ command to create a ProRes4444 video clip from a sequence of TIFF images with
 alpha channel enabled.
 
 ```
-ffmpeg -i timer%04d.tif -r 30 -c:v prores_ks -pix_fmt yuva444p10le prores.mov
+ffmpeg -framerate 30 -i timer%04d.tif -c:v prores_ks -profile:v 4 -alpha_bits 16 -pix_fmt yuva444p10le prores.mov
 ```
 
 | Name        | Required   | Description                                     |
@@ -255,7 +268,7 @@ not rigorous though so take this feedback with a grain of salt.
 For the rest of this article I'm going to walk through the procedure I will
 use to recreate a video clip that looks like this:
 
-{% include figure image_path="/assets/images/wiz7-phoonzang-statue.jpg"
+{% include media-figure.html image_path="/assets/images/wiz7-phoonzang-statue.jpg"
 alt="Statue of the cosmic lord Phoonzang"
 caption="Statue of the cosmic lord Phoonzang" %}
 
@@ -280,7 +293,7 @@ in the original game, I am overlaying it ontop of the video when appropriate.
 Moreover it is being recorded from an out of game mapping tool and encoded
 into the same video stream as the game recording.
 
-{% include figure image_path="/assets/images/wiz7-recording-explained.jpg"
+{% include media-figure.html image_path="/assets/images/wiz7-recording-explained.jpg"
 alt="Raw gameplay recording of wizardry + map"
 caption="Raw gameplay recording of wizardry + map" %}
 
@@ -291,7 +304,7 @@ schemes and chain together all sorts of operations.
 
 I am not going to walk step by step through the mechanisms that ffmpeg uses to
 crop video content here, this has been
-[covered elsewhere](https://t.co/2SHMQaPt1Z?amp=1) sufficiently well that I
+[documented in the FFmpeg crop reference](https://ffmpeg.org/ffmpeg-filters.html#crop) sufficiently well that I
 don't think it's worth trying to recreate that authors guidance here.
 
 With feedback from the above article I created a fancy batch script to
@@ -320,12 +333,16 @@ Before saving the streams I am passing the gameplay audio through a highpass
 filter to remove some low-frequency sound artifacts caused by the emulation of
 the MPU401 sound device.
 
+This batch script assumes input streams `0:1` and `0:2` are audio, and that the
+recording is large enough for the specified crops. Check your stream layout with
+`ffprobe` before adapting it. It maps two audio tracks; it does not mix them.
+
 Running the script as is, results in creation of two new MP4 video files,
 the first being the gameplay video combining the audio track from the computer
 and my microphone.  The second video file just contains the video of the
 cropped map which in turn looks just like this
 
-{% include figure image_path="/assets/images/wi7-raw-map.png"
+{% include media-figure.html image_path="/assets/images/wi7-raw-map.png"
 alt="Cropped wizardry 7 map"
 caption="Cropped wizardry 7 map" %}
 
@@ -335,7 +352,7 @@ that I was able to generate in Davinci Fusion. The entire point of the first
 create an alpha masked video element that can be imported easily with its
 alpha channel intact into my editor of choice.
 
-{% include figure image_path="/assets/images/wiz7-mapcompass-v2-resolve.png"
+{% include media-figure.html image_path="/assets/images/wiz7-mapcompass-v2-resolve.png"
 alt="Polished Wizardry 7 Map in Davinci Fusion"
 caption="Polished Wizardry 7 Map in Davinci Fusion" %}
 
@@ -348,11 +365,12 @@ video to 20% transparency and export it as a VP9.
 
 ```
 ffmpeg -f lavfi -i color=color=red@.2:size=228x228,format=yuva420p ^
--t 20 -c:v vp9 redcanvas20.webm
+-t 20 -c:v libvpx-vp9 redcanvas20.webm
 ```
 
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redcanvas">
     <source src="/assets/images/redcanvas20.webm" type="video/webm">
+    <a href="/assets/images/redcanvas20.webm">Download this video demonstration</a>
 </video>
 
 That wasn't so hard, but lets take a look at the command.
@@ -375,10 +393,11 @@ alpha level of every pixel directly using an expression.  I will drop the
 ```
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(eq(X,Y),255,0)' ^
--t 20 -c:v vp9 redline20.webm
+-t 20 -c:v libvpx-vp9 redline20.webm
 ```
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redline">
     <source src="/assets/images/redline20.webm" type="video/webm">
+    <a href="/assets/images/redline20.webm">Download this video demonstration</a>
 </video>
 
 **Note:** Before I continue I should mention that I don't have any earlier
@@ -453,11 +472,12 @@ Set lower third of video opaque:
 ```
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(gte(Y,2*H/3),255,0)' ^
--t 20 -c:v vp9 redlowerthird20.webm
+-t 20 -c:v libvpx-vp9 redlowerthird20.webm
 ```
 
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redlowerthird">
     <source src="/assets/images/redlowerthird20.webm" type="video/webm">
+    <a href="/assets/images/redlowerthird20.webm">Download this video demonstration</a>
 </video>
 
 This might catch you by surprise but look at the expression `gte(Y,2*H/3)`
@@ -473,14 +493,15 @@ Lets try another, lets fill in the top right diagonal with opaque pixels:
 ```
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(lte(Y,X),255,0)' ^
--t 20 -c:v vp9 redtopdiagonal20.webm
+-t 20 -c:v libvpx-vp9 redtopdiagonal20.webm
 ```
 
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redtopdiagonal">
     <source src="/assets/images/redtopdiagonal20.webm" type="video/webm">
+    <a href="/assets/images/redtopdiagonal20.webm">Download this video demonstration</a>
 </video>
 
-Now, pixels where $$Y \leq X$$ are transparent and others are opaque
+Now, pixels where $$Y \leq X$$ are opaque and others are transparent
 which gives this pattern you can see here where the bottom left diagonal half
 of the image is transparent.
 
@@ -509,11 +530,12 @@ look a bit like this:
 ```
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(lte(hypot(X,Y),100),255,0)' ^
--t 20 -c:v vp9 redcircle20-1.webm
+-t 20 -c:v libvpx-vp9 redcircle20-1.webm
 ```
 
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redcircle 1">
     <source src="/assets/images/redcircle20-1.webm" type="video/webm">
+    <a href="/assets/images/redcircle20-1.webm">Download this video demonstration</a>
 </video>
 
 Well, that doesn't look correct. What have we done wrong?  Well we've drawn
@@ -538,11 +560,12 @@ of our canvas like this:
 ```
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(lte(hypot(X-(W/2),Y-(H/2)),100),255,0)' ^
--t 20 -c:v vp9 redcircle20.webm
+-t 20 -c:v libvpx-vp9 redcircle20.webm
 ```
 
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: redcircle">
     <source src="/assets/images/redcircle20.webm" type="video/webm">
+    <a href="/assets/images/redcircle20.webm">Download this video demonstration</a>
 </video>
 
 Tada!
@@ -555,7 +578,7 @@ as masks to make part of a video transparent. Do you remember that image of
 the raw map from my classic computer game? Well, lets take what we have
 learned to mask out a circle in that map video
 
-{% include figure image_path="/assets/images/wi7-raw-map.png"
+{% include media-figure.html image_path="/assets/images/wi7-raw-map.png"
 alt="Cropped wizardry 7 map"
 caption="Cropped wizardry 7 map" %}
 
@@ -571,10 +594,11 @@ ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(lte(hypot(X-(W/2),Y-(H/2)),100),255,0)' ^
 -i map.mp4 ^
 -filter_complex "[0]alphaextract[a];[1][a]alphamerge" ^
--c:v vp9 maskedmap.webm
+-c:v libvpx-vp9 -pix_fmt yuva420p maskedmap.webm
 ```
-<video autoplay="autoplay" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: maskedmap">
     <source src="/assets/images/maskedmap.webm" type="video/webm">
+    <a href="/assets/images/maskedmap.webm">Download this video demonstration</a>
 </video>
 
 This is how you add a circular mask over a video with ffmpeg! Cool.
@@ -591,7 +615,7 @@ I want to take this image that I drew in CorelDRAW using my vast experience
 of occasionally making posters once every half decade and overlay it onto
 our masked map to create a more polished final result.
 
-{% include figure image_path="/assets/images/mapcompass-1.png"
+{% include media-figure.html image_path="/assets/images/mapcompass-1.png"
 alt="Compass overlay"
 caption="Compass overlay" %}
 
@@ -599,15 +623,16 @@ caption="Compass overlay" %}
 ffmpeg -f lavfi -i color=color=red:size=228x228,format=yuva420p,^
 geq=lum='p(X,Y)':a='if(lte(hypot(X-(W/2),Y-(H/2)),90),255,0)' ^
 -i map.mp4 ^
--i mapcompass-1.png -loop 1 ^
--filter_complex "[0]alphaextract[a];[1][a]alphamerge[mask];[mask][2]overlay" ^
--c:v vp9 finishedmap.webm
+-loop 1 -i mapcompass-1.png ^
+-filter_complex "[0]alphaextract[a];[1][a]alphamerge[mask];[mask][2]overlay=shortest=1:format=auto" ^
+-c:v libvpx-vp9 -pix_fmt yuva420p finishedmap.webm
 ```
 
 The result looks like this:
 
-<video autoplay="autoplay" width="100%" loop="loop">
+<video controls muted playsinline loop preload="none" width="228" height="228" aria-label="Demonstration: finishedmap">
     <source src="/assets/images/finishedmap.webm" type="video/webm">
+    <a href="/assets/images/finishedmap.webm">Download this video demonstration</a>
 </video>
 
 ## Summary
@@ -630,3 +655,15 @@ the one we created.
 
 Thanks for reading! Also take some time and watch my derpy YouTube stuff to
 see how it all turns out.
+## References and next steps
+
+The finite map clip is the main input to `alphamerge`; the generated mask is
+the secondary input. The final overlay uses
+`shortest=1` and `format=auto` to retain alpha before VP9 encoding.
+
+- [FFmpeg filter reference](https://ffmpeg.org/ffmpeg-filters.html): `geq`, `alphaextract`, `alphamerge`, and `overlay`.
+- [FFmpeg codec reference](https://ffmpeg.org/ffmpeg-codecs.html): libvpx and ProRes encoder options.
+- [Why this workflow was built]({% post_url 2020-04-21-ffmpeg-vs-davinci-resolve %}).
+
+Try the small synthetic examples first, then adapt the crop dimensions and audio
+mapping to your own recording.

@@ -1,9 +1,19 @@
 ---
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
-author_profile: true
+title: "Experiments worth sharing"
+author_profile: false
+classes: museum-home
 header:
-  image: "/assets/images/vi-domina.jpg"
+  og_image: "/assets/images/vi-domina-header.png"
+  image: "/assets/images/optimized/vi-domina-header-1600.webp"
+  image_description: "Geometric digital portrait in blue, orange, and red"
 ---
+{% if paginator.page == 1 or paginator == nil %}
+<p class="museum-intro">Retro computing, digital art, and practical experiments. Explore a project below, or browse the latest notes.</p>
+<ul class="museum-start" aria-label="Featured projects">
+  <li><a href="{% post_url 2020-04-23-ffmpeg-alpha-masking %}">Video &amp; graphics</a><span>Build transparent overlays with FFmpeg.</span></li>
+  <li><a href="{% post_url 2021-12-24-openbsd-7-wont-boot-on-sunblade-100 %}">Retro computing</a><span>Understand a SunBlade boot failure.</span></li>
+  <li><a href="{% post_url 2020-10-12-wireless-ping-spikes %}">Troubleshooting</a><span>Investigate Windows Wi-Fi latency.</span></li>
+</ul>
+<p class="museum-archive-note">From the 2020–2021 archive. See each article for its original software context.</p>
+{% endif %}

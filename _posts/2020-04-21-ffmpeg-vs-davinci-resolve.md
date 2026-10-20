@@ -1,8 +1,12 @@
 ---
+excerpt: "Building a map overlay for Wizardry 7 videos exposed the limits of my editing setup. Here is why I explored FFmpeg for pre-rendering the effects."
+header:
+  og_image: /assets/images/davinci-resolve-wizardry7.png
+  og_image_alt: "Wizardry 7 video editing in DaVinci Resolve"
 title: "Thoughts on using FFMPEG instead of Davinci Resolve"
 date: 2020-04-21
 categories:
-  - blog
+  - Blog
 tags:
   - FFMPEG
   - Wizardry 7
@@ -10,7 +14,7 @@ tags:
 Drawing a map is Hard!
 ======================
 
-{% include figure image_path="/assets/images/davinci-resolve-wizardry7.png"
+{% include media-figure.html image_path="/assets/images/davinci-resolve-wizardry7.png"
 alt="Editing my wizardry 7 letsplay video in Davinci Resolve"
 caption="Editing my wizardry 7 letsplay video in Davinci Resolve" %}
 
@@ -22,7 +26,7 @@ the mechanism by which you access it is quite cumbersome and requires multiple
 menus and clicks, and more importantly there is no way to keep the map open
 whilst the player navigates and explores the world.
 
-{% include figure image_path="/assets/images/wiz7-phoonzang-statue.jpg"
+{% include media-figure.html image_path="/assets/images/wiz7-phoonzang-statue.jpg"
 alt="Wizardry 7 gameplay with map element composited into video"
 caption="Wizardry 7 gameplay with map element composited into video" %}
 
@@ -43,7 +47,7 @@ style UI element which I fade in and out of view in my videos depending on
 context. For instance, the map disappears during combat, or while accessing
 the save/loading screens.
 
-{% include figure image_path="/assets/images/wiz7-mapcompass-v2-resolve.png"
+{% include media-figure.html image_path="/assets/images/wiz7-mapcompass-v2-resolve.png"
 alt="Composited Wizardry 7 Map"
 caption="Composited Wizardry 7 Map" %}
 
@@ -80,7 +84,7 @@ the out of game map source to a stylish video element with alpha blending.
 I can easily apply this macro to any map source file I generate, it seemed
 that everything was peachy!
 
-{% include figure image_path="/assets/images/wiz7-render-w-fusion-map.png"
+{% include media-figure.html image_path="/assets/images/wiz7-render-w-fusion-map.png"
 alt="Slow video rendering in Davinci Resolve"
 caption="Slow video rendering in Davinci Resolve" %}
 
@@ -191,3 +195,7 @@ go through one instruction at a time until we are able to reproduce the what
 the same (or better) quality of map thingy that I built-in Davinci Resolve.
 
 Take care for now!
+
+## Continue the project
+
+[Build the transparent overlay step by step]({% post_url 2020-04-23-ffmpeg-alpha-masking %}). This article describes a Resolve 16.2 setup in 2020, not a benchmark of current editing software.

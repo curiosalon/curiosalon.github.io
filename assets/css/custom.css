@@ -1,0 +1,95 @@
+/* Local additions to Minimal Mistakes. The theme still supplies the layout,
+   colors, and syntax highlighting. Posts use its built-in `wide` class. */
+.page__content div.highlighter-rouge,
+.page__content figure.highlight,
+.page__content pre {
+  font-size: 16px;
+}
+.page__content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.page__content pre code {
+  font-size: inherit;
+  white-space: inherit;
+}
+.page__content video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-block: 1em;
+}
+
+/* Homepage-specific framing leaves the theme's other layouts inherited. */
+.museum-home .page__hero {
+  max-width: 1280px;
+  margin: 1.25rem auto 0;
+  padding-inline: 1rem;
+}
+.museum-home .page__hero-image {
+  border-radius: 4px;
+  max-height: 360px;
+  object-fit: cover;
+  object-position: center 36%;
+}
+.museum-home .archive {
+  float: none;
+  width: 100%;
+  max-width: 56rem;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+.museum-intro { margin-bottom: 1em; }
+.museum-start {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+.museum-start li {
+  padding: 0.85rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 0.8em;
+}
+.museum-start a { display: block; font-weight: bold; margin-bottom: 0.35em; }
+.museum-start span { display: block; }
+.museum-archive-note { font-size: 0.7em; }
+@media (max-width: 599px) {
+  .museum-start { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+/* Progressive enhancement: without JavaScript the theme's full TOC remains. */
+.museum-toc {
+  margin-bottom: 1em;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.museum-toc > summary { padding: 0.7em 1em; cursor: pointer; font-weight: bold; }
+.museum-toc > summary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.museum-toc .toc { border: 0; box-shadow: none; }
+.museum-toc .nav__title { display: none; }
+
+/* Reserve layout space and keep technical content usable on narrow screens. */
+.museum-home .page__hero-image { aspect-ratio: 20 / 9; }
+.author__avatar img { aspect-ratio: 1; object-fit: cover; }
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid #0e2431;
+  outline-offset: 3px;
+}
+.page__content pre:focus-visible { outline-color: #a51b37; }
+.page__content table { display: block; max-width: 100%; overflow-x: auto; }
+.page__content img { height: auto; }
+.greedy-nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.3em; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Notice links need their own override because the theme colors them by notice type. */
+.page__content [class*="notice"] a { color: #76132a; }
+.page__content [class*="notice"] a:hover { color: #521020; }

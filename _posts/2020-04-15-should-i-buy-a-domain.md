@@ -1,6 +1,8 @@
 ---
+excerpt: "Does a small hobby blog need its own domain? Some thoughts on cost, identity, and spending time on useful content instead."
 title: "Should I buy a domain for my new website?"
 excerpt_separator: "<!--more-->"
+tags: [Web publishing]
 categories:
   - Blog
 ---
@@ -28,7 +30,7 @@ matter whether a domain name is relevant, usually.
 For instance if I was to search on Google for a topic, lets say, "Using github
 to publish a website for free", what would I get?
 
-{% include figure image_path="/assets/images/publish-to-github-free.png"
+{% include media-figure.html image_path="/assets/images/publish-to-github-free.png"
 alt="Instructions to publish a free website using github" 
 caption="Instructions to publish a free website using github" %}
 

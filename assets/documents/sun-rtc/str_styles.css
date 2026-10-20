@@ -1,0 +1,245 @@
+/*CSS FILE FOR STRUCTURED BOOKS */
+/* simple style sheet for FM+SGML 6.0 HTML client */
+
+/* misc formats */
+/* Pat added styles for ErrorMsg, 09.12.00 */
+.ErrorTxt { margin-left: 36pt; }
+.MsgText { margin-top: 2.0em; white-space: pre; font-family: monospace;
+	font-size: 16pt }
+	
+
+/* basic global table formatting */
+/* If Caution Icon doen't need to create using TABLE, top: 1em, bottom: 1em. */
+/* Pat added styles for Tables using Code, Titled, NoTitle. 02.01.01 */
+TD { vertical-align: top; }
+TD P { vertical-align: top; }
+TH { vertical-align: bottom; }
+TABLE.Code { margin-top: 1.0em; margin-bottom: 1.0em; }
+TABLE.Titled { margin-top: 1.0em; margin-bottom: 1.0em; }
+TABLE.Untitled { margin-top: 1.0em; margin-bottom: 1.0em; }
+
+
+/* character formats */
+KBD.UserInput { font-family: courier; font-weight: bold; font-style: regular;
+	font-size: 120%; }
+KBD.Filename-Command { font-family: courier; font-weight: normal;
+	font-size: 130%; }
+KBD.Literal { font-family: courier; font-weight: normal;
+	font-size: 130%; } 
+I.Replaceable { font-family: Times; font-weight: normal; font-style: italic;
+	font-size: 130%; }
+I.CiteTitle { font-family: sans-serif; font-weight: normal; font-style: italic;
+	font-size: 130%; }
+I.Strong { font-style: regular; font-weight: bold; }
+I.LineAnnotation { font-family: sans-serif; font-weight: normal; font-style: italic;
+	font-size: 130%; }
+
+
+
+/* footnote formats */
+/* Pat added styles for footnotes 02.02.01 */
+.footnote { vertical-align: super; font-size: 120% }
+
+
+
+/* Cross-Refs formatting */
+/* Pat added styles for cross-references to include point size. 02.02.01 */
+.XRef { font-size: 10pt; }
+
+
+
+/* copyright formatting */
+/* Pat added styles on 06.18.01 */
+.TitleText { font-size: 16pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+.Title { font-size: 16pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+.SubTitleText { margin-top: -.5px; font-size: 14pt; font-weight: regular; font-style: italic;
+	font-family: helvetica, sans-serif; }
+.ISBN { margin-bottom: 1.0em; }
+.PubDate { margin-top: -14px; }
+.PublisherName {margin-top: -14px; }
+.Abstract { margin-top: 1.0em; margin-bottom: 1.5em; border-style: solid; border-color: #CCCCCC; border-width: 5px; 
+	    text-align: center; padding: 5px; font-size: 12pt; }
+	    
+
+
+/* chapter numbering and titles */
+/* Pat added styles for Heads; 11.07.00 */
+/* Pat modified styles for Heads by increasing font size; added styles for
+      H4 which is used to format Procedure titles. 02.01.01 */
+td span.ChapNumPrefix { font-size: 12pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif; }
+	
+td.navbartitle { vertical-align: center; font-size: 12pt; font-weight: normal;
+	font-style: regular; font-family: helvetica, sans-serif }
+	
+td span.ChapNumNum, TD.ChapNumberA
+	{ font-size: 30pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+	
+td.ChapTitle, .ChapTitleA, .ChapTitleCSR, .ChapTitleC, .ChapTitleG,
+	.ChapTitleI, .ChapTitleP
+	{ font-size: 24pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head1, .Head1A, .Head1C, .Head1CSR, .Head1G, .Head1P
+	{ margin-top: 1.0em; font-size: 22pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head2, .Head2A, .Head2CSR, .Head2G, .Head2P, .Head2-OptFlag
+	{ margin-top: 1.0em; font-size: 20pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head3, .Head3A, .Head3CSR, .Head3G, .Head3P, .Head3-OptCat
+	{ margin-top: 1.0em; font-size: 18pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+	
+.H4 { font-size: 16pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+
+
+/* table code and figure captions */
+/* Pat added missing TableCaption and FigureCaption tags, 09.12.00 */
+/* Add more space before every figure, table, and code caption, 09.12.00 */
+/* Julia changed font-size from 10pt to 11pt - 11.17.2000 */
+.TableCaption, .TableCaption-Wide, .TableCaptionA, .TableCaptionA-Wide,
+	.TableCaptionG, .TableCaptionG-Wide, .TableCaptionP-Wide, .TableCaptionP,
+	.TableCaptionP-Wide
+	{ white-space: pre; font-size: 13pt; font-weight: bold;
+	font-style: regular; font-family: helvetica, sans-serif }
+	
+.CodeCaption, .CodeCaption-Wide, .CodeCaptionA, .CodeCaptionA-Wide,
+	.CodeCaptionG, .CodeCaptionG-Wide, .CodeCaptionP, .CodeCaptionP-Wide
+	{ white-space: pre; font-size: 13pt; font-weight: bold; font-style: regular;
+	  font-family: helvetica, sans-serif; }
+	  
+.FigureCaption, .FigureCaption-Wide, .FigureCaptionA, .FigureCaptionA-Wide,
+	.FigureCaptionG, .FigureCaptionG-Wide, .FigureCaptionP, FigureCaptionP-Wide
+	{ margin-top: 1.5em; white-space: pre; font-size: 13pt; font-weight: bold;
+	  font-style: regular; font-family: helvetica, sans-serif; }
+
+
+/* Bullet formats */
+/* Pat added Julia's fix for adding white space between bullets, 03.22.01 */
+/* Pat added styles for determining list style symbols depending on nesting,
+   07.20.01 */
+/*.Linebreak { line-height: 0.5em; }*/
+
+	
+
+/* Step list formats */
+/* Pat adjusted styles for the StepPara tags, 09.12.00 */
+/* Julia suggested for New CLASSES; see below: */
+P.Step { font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif; }
+P.Step2 { font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+P.Step3 { font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+P.StepPara1 { font-weight: regular; margin-left: 15px; }
+P.StepPara2 { font-weight: regular; margin-left: 15px; }
+P.StepPara3 { font-weight; regular; margin-left: 15px; }
+
+
+
+/* Ordered list formats */
+/* Pat adjusted styles for the List tags, 09.10.00 */
+OL { list-style: decimal; }
+OL OL { list-style: lower-alpha; }
+OL OL OL { list-style: lower-roman; }
+P.List1, P.List1+ { list-style: decimal; list-style-position: outer;
+	font-weight: regular; }
+P.List2, P.List2+ { font-weight: regular; list-style: lower-alpha;
+	list-style-position: outer; }
+P.List3, P.List3+ { font-weight: regular; list-style: lower-roman;
+	list-style-position: outer; }
+
+
+/* ParaIndents indented to match ordered lists */
+/* Pat adjusted styles for ParaIndent tags, 09.10.00*/
+.ParaIndent1 { font-weight: regular; }
+.ParaIndent2 { font-weight: regular; }
+.ParaIndent3 { font-weight: regular; }
+
+
+/* glossary formats */
+/* won't format a DT or DD, use a P */
+.GlossTerm { font-size: 14pt; font-weight: bold; font-style: regular }
+.GlossText { margin: 0em 0em 1.5em 2.5em }
+
+
+/* This is for caution icons. Needs class assigned to icons in the HTML. */
+/* Not needed if cautions are converted to tables */
+/* IMG.CautionIcon { float: left } */
+
+
+/* code table line spacing */
+/* Pat adjusted styles for ScreenText */
+PRE.ScreenText { white-space: pre; margin-top: -6px; margin-bottom: 0px }
+
+
+
+/* TOC formats */
+.ChapTitleTOC, .ChapTitleATOC, .ChapTitleCTOC, .ChapTitleCSRTOC, .ChapTitleGTOC,
+	.ChapTitleITOC, .ChapTitlePTOC
+	{ margin: 1em 0em 0em 2em; font-size: 14pt; font-weight: bold; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head1TOC, .Head1ATOC, .Head1PTOC, .Head1CSRTOC, .Head1GTOC
+	{ margin: .5em 0em 0em 4em; font-size: 12pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head2TOC, .Head2ATOC, .Head2-ProcedureTOC, .Head2-OptCatTOC, .Head2-OptFlagTOC,
+	.Head2CRSTOC, .Head2PTOC
+	{ margin: .5em 0em 1em 6em; font-size: 12pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.Head3TOC, .Head3ATOC, .Head3-ProcedureTOC, .Head3-OptCatTOC, .Head3CSRTOC, .Head3PTOC
+	{ margin: .5em 0em 1em 8em; font-size: 12pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+.GroupTitlesIX { margin: 1.5em 0em 0em 0em; font-size: 18pt; }
+	
+
+
+/* LOT, LOF, LOC formats */
+.FigureCaptionLOF, FigureCaption-WideLOF, .FigureCaptionA-WideLOF, .FigureCaptionALOF,
+	.FigureCaptionP, .FigureCaptionP-WideLOF, .FigureCaptionGLOF,
+	.FigureCaptionG-WideLOF
+	{ margin: .5em 0em 0em 2em; font-size: 12pt; font-weight: normal;
+	font-style: regular; font-family: helvetica, sans-serif }
+	
+.TableCaptionLOT, .TableCaption-WideLOT, .TableCaptionALOT, .TableCaptionA-WideLOT,
+	.TableCaptionGLOT, .TableCaptionG-WideLOT, .TableCaptionPLOT,
+	.TableCaptionP-WideLOT
+	{ margin: .5em 0em 0em 2em; font-size: 12pt; font-weight: normal;
+	font-style: regular; font-family: helvetica, sans-serif }
+	
+.CodeCaptionLOP, .CodeCaption-WideLOP, .CodeCaptionALOP, .CodeCaptionA-WideLOP 
+	.CodeCaptionGLOP, .CodeCaptionG-WideLOP, .CodeCaptionP, .CodeCaptionP-WideLOP
+	{ margin: .5em .5em 0em 2em; font-size: 12pt; font-weight: normal;
+	font-style: regular; font-family: helvetica, sans-serif }
+
+
+/* index formats */
+/* Pat adjusted font size for index entries, 02.13.01 */
+P.Level1IX {
+	margin: .25em 0em 0em 2em;
+	font-size: 13pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+P.Level2IX {
+	margin: .25em 0em 0em 4em;
+	font-size: 13pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+P.Level3IX {
+	margin: .25em 0em 0em 6em;
+	font-size: 13pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
+	
+P.Level4IX {
+	margin: .25em 0em 0em 8em;
+	font-size: 13pt; font-weight: normal; font-style: regular;
+	font-family: helvetica, sans-serif }
