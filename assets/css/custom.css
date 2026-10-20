@@ -93,3 +93,37 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
 /* Notice links need their own override because the theme colors them by notice type. */
 .page__content [class*="notice"] a { color: #76132a; }
 .page__content [class*="notice"] a:hover { color: #521020; }
+
+/* Monster illustrations wrap prose; technical figures keep the full width. */
+.page__content .wizardry-monster {
+  width: 32%;
+  max-width: 320px;
+  margin-top: 0.25em;
+  margin-bottom: 1em;
+}
+.page__content .wizardry-monster--left {
+  float: left;
+  margin-left: 0;
+  margin-right: 1.5em;
+}
+.page__content .wizardry-monster--right {
+  float: right;
+  margin-right: 0;
+  margin-left: 1.5em;
+}
+.page__content .wizardry-monster img { display: block; width: 100%; }
+.page__content .wizardry-monster figcaption {
+  text-align: center;
+  font-size: 0.65em;
+  line-height: 1.4;
+}
+.page__content .wizardry-diagram { clear: both; }
+.page__content:has(.wizardry-monster) h2 { clear: both; }
+@media (max-width: 639px) {
+  .page__content .wizardry-monster {
+    float: none;
+    width: 80%;
+    max-width: 280px;
+    margin: 1em auto;
+  }
+}

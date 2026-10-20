@@ -13,6 +13,10 @@ Well then, I tried my hand at having one of the agents decompile the actual exec
 
 I watched it burn through tokens at an astonishing rate just trying to reverse engineer the implementation of the C printf library call. Like... ok, I guess I didn't ask it nicely enough to not waste its time on such frivolities. At least start with the game's main routine or something like a nice little edge case function.
 
+<figure class="wizardry-monster wizardry-monster--right">
+  <img src="/assets/images/wizardry-packed-bits/giant-openai.webp" width="1382" height="1138" alt="A red-bearded Wizardry giant smashes an OpenAI emblem with a club, scattering zeros and ones." loading="lazy" decoding="async">
+</figure>
+
 For those that don't know, printf is a bit of a monster. It's not surprising it struggled.
 
 There are tools for this, Ghidra, a fancy Java tool, as well as a slew of others, and honestly I thought it would do better than it did. Maybe it needed better prompts or just more dump trucks of coal powered electricity.
@@ -29,6 +33,10 @@ Even a high powered language model gets stuck on this. It can produce perfectly 
 
 ## A little room for a lot of flags
 
+<figure class="wizardry-monster wizardry-monster--left">
+  <img src="/assets/images/wizardry-packed-bits/weevil-binary.webp" width="1254" height="1254" alt="An antlered golden stag weevil picks up a binary digit from a row of number tiles." loading="lazy" decoding="async">
+</figure>
+
 Suppose we have a collection of yes or no values to store. We can give each one a whole byte, or pack eight of them into the eight bits of a byte. The second arrangement saves space, but now reading a value involves finding the right byte and picking out the right bit. That probably sounds complicated if you don't know anything about how we get computers to handle numbers. Well, the good news is that it's going to get way more complicated.
 
 The catch is that memory here is addressed in bytes. I can't give the machine an address for just one bit and ask it to replace that. The smallest memory unit these routines read or write is a byte of eight bits. To change one of them, I need to select it inside that byte without having the other seven stick their noses into the calculation.
@@ -40,10 +48,12 @@ Sigh........
 For example, bit offset 13, counting from zero. Dividing by eight gives us byte index 1 with a remainder of 5. We go to the second byte, then select bit 5 inside it. Reading means testing that bit. Writing means changing it while leaving its neighbours alone. Blah blah blah, here's a picture I had an agent draw showing this:
 
 ![Bit offset 13 divided by eight selects byte index 1 and bit position 5, highlighted among the surrounding bits](/assets/images/wizardry-packed-bits/bit-offset.svg)
+{: .wizardry-diagram }
 
 To set bit 5, I combine the byte with a mask containing a one only at that position. OR with zero leaves a bit alone; OR with one sets it. To clear the selected bit, I use AND with the opposite mask, all ones except a zero at bit 5. The processor still writes a byte, but the mask makes sure only the bit I want changes.
 
 ![Setting and clearing bit 5 with highlighted masks, byte values and illustrative OR and AND assembly instructions](/assets/images/wizardry-packed-bits/bit-masks.svg)
+{: .wizardry-diagram }
 
 *SI points at the selected byte.*
 
@@ -52,6 +62,7 @@ Fields extend the same idea to values that occupy several bits at once. Instead 
 A field can straddle two bytes. Field index 2 with a width of three starts at bit offset 6, so it occupies offsets 6, 7 and 8. The first two positions are in one byte and the third is in the next. Now the routine has to deal with the byte boundary (it's split across two of them) as well as the mask that excludes the unwanted bits.
 
 ![A three-bit field starting at buffer offset 6 highlights bits 6 and 7 in byte zero and bit zero in byte one](/assets/images/wizardry-packed-bits/field-boundary.svg)
+{: .wizardry-diagram }
 
 Once somebody writes these routines, the rest of the game can call them without doing the masks and shifts over again. Finding them together in both games makes me wonder how much of the original library survives between versions.
 
@@ -60,6 +71,10 @@ This is the kind of thing that once you solve it and it works, you damn well don
 Neither I nor the coding agent could figure out how this was originally implemented. It wasn't until I started peering even further back into time that it began to become clear. I installed Wizardry 6 (VI for cool kids). But that's foreshadowing. For now we have some puzzling to puzzle over.
 
 ## Asking the compiler to do it
+
+<figure class="wizardry-monster wizardry-monster--right">
+  <img src="/assets/images/wizardry-packed-bits/slime-c.webp" width="1254" height="1254" alt="A golden cave slime strains to bend a large letter C, with binary tiles stuck in its goo." loading="lazy" decoding="async">
+</figure>
 
 The natural place to start is C. These are small operations, and it is easy to write something that reads and writes the right bits.
 
@@ -80,6 +95,7 @@ In Wizardry VI the same functions occupy 260 bytes instead of the sequel's 289. 
 Here are the five routines side by side. Let's not worry about the details of what they do. It's the goo around them that matters here, because that's the part that's different. The later versions gain either five or seven bytes each.
 
 ![Comparison of all five routines in VI and VII, with added setup instructions marked by plus signs and unchanged algorithm bodies identified](/assets/images/wizardry-packed-bits/version-diff.svg)
+{: .wizardry-diagram }
 
 Every function gains the same five bytes of setup in VII.
 
@@ -94,6 +110,7 @@ The first instruction clears the direction flag. When the processor uses that fl
 The two field functions also gain instructions to save and restore ES. The other three already save it in VI. Five extra bytes in each of five functions gives us 25 bytes, and saving and restoring ES in the remaining two adds another four. There are our 29 bytes.
 
 ![The added CLD, MOV AX DS and MOV ES AX instructions explained individually, with the segment value moving through AX and a count of the extra bytes](/assets/images/wizardry-packed-bits/entry-assembly.svg)
+{: .wizardry-diagram }
 
 The odd part is that the bit manipulation bodies do not need this string setup. Why add it to all five?
 
@@ -129,6 +146,10 @@ There is more about how this works in the [binquery notes](https://github.com/cu
 
 ## The tools have their own puzzle
 
+<figure class="wizardry-monster wizardry-monster--left">
+  <img src="/assets/images/wizardry-packed-bits/reptile-manx.webp" width="1254" height="1254" alt="A spiny golden reptile chews the corner of a MANX compiler sign." loading="lazy" decoding="async">
+</figure>
+
 I'm using Manx/Aztec C 4.10d. Figuring out its tools occasionally becomes an investigation of its own. For instance, I had to install a binary patch in my version of it to stomp a decimal to binary conversion bug that I stumbled upon in an earlier adventure. My guess is that this is very close to the version Sir-Tech originally used to write the Wizardry games, probably 4.2.
 
 Reverse engineering the compiler itself exposed hidden diagnostic switches that show more of its internal choices. They look like a shortcut to understanding why a value gets a particular register. Unfortunately, turning them on also changes how the compiler hands its output to the assembler.
@@ -162,3 +183,5 @@ The extra setup in VII could come from somebody editing a shared macro. That wou
 I would love to find the same routines in another program, especially one with surviving source. Then I might finally get to see what somebody types to make the compiler, or assembler, put those instructions in that peculiar order.
 
 Either way, I'm pretty confident I've reproduced the sort of compiler and assembler interface the original programmers were working with.
+
+*Monster illustrations based on the Wizardry VII sprites collected at [Emonoya](https://emonoya.net/monster/7/7m_1.html), including the [forest giant](https://emonoya.net/monster/7/wgm_02.html).*
