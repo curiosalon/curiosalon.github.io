@@ -1,0 +1,116 @@
+<STYLE MEDIA="screen" TYPE="text/css"><!--
+  pre { white-space:-moz-pre-wrap; word-wrap:break-word; margin:0px }
+--></STYLE><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr><td nowrap="" width="3%" valign="top"><b>Document Audience:</b></td><!-- <cds:audience>INTERNAL</cds:audience> --><td width="30%" valign="top" align="left">INTERNAL</td></tr><tr><td nowrap="" width="3%" valign="top"><b>Document ID:</b></td><td valign="top" align="left">A0204-1</td></tr><tr><td nowrap="" width="3%" valign="top"><b>Title:</b></td><td colspan="2" valign="top" align="left">SunBlade 100 systems may not auto-restart after a power failure.</td></tr><tr><td nowrap="" width="3%" valign="top"><b>Copyright Notice:</b></td><td colspan="2" valign="top" align="left">Copyright © 2007 Sun Microsystems, Inc. All Rights Reserved</td></tr><tr><td nowrap="" width="3%" valign="top"><b>Update Date:</b></td><td valign="top" align="left">Mon Sep 30 00:00:00 MDT 2002</td></tr></table><hr><pre>----------------------------------------------------------------------------
+             - Sun Proprietary/Confidential: Internal Use Only -
+----------------------------------------------------------------------------
+
+                             FIELD CHANGE ORDER
+            (For Authorized Distribution by Enterprise Services)
+            
+</pre><pre><b>FCO #:</b>&nbsp;A0204-1</pre><pre><b>Status:</b>&nbsp;inactive</pre><b>Synopsis:</b>&nbsp;SunBlade 100 systems may not auto-restart after a power failure.<pre><b>Date:</b>&nbsp;Sep/30/2002</pre><pre><b>SunAlert:</b>&nbsp;No</pre><pre><b>Top FIN/FCO Report:</b>&nbsp;No</pre><pre><b>Products Reference:</b>&nbsp;Sun Blade 100 System Board</pre><pre><b>Product Category:</b>&nbsp;DeskTop / System Component</pre><pre><b>Product Affected:</b>&nbsp;</pre><pre>Systems Affected:
+
+Mkt_ID    Platform      Model   Description          Serial Number
+------    --------      -----   -----------          -------------
+   -      A36             -     Sun Blade 100              -
+
+X-Options  Affected:
+
+Mkt_ID     Platform     Model    Description        Serial Number
+------     --------     -----    -----------        -------------
+  -	      -		  -	       -		  -</pre><pre><b>Parts Affected:</b>&nbsp;</pre><pre>Part Number         Description                       Model
+-----------          -----------		      -----                                   
+375-3061-01         SunBlade 100 MB+EMI Cls B Tray      -
+375-0096-01         SunBlade 100 MB+EMI Cls A Tray      -
+375-3092-01         SunBlade 100 MB+EMI Cls A Tray      -
+375-3123-01         SunBlade 100 Motherboard            -</pre><pre><b>References:</b>&nbsp;</pre><pre>ESC: 538271
+  ESC: 538702
+  ESC: 535124
+  BugID: <a href="/search/document.do?assetkey=urn:cds:docid:1-1-4635968-1">4635968</a>
+  ECO: WO_24091
+  LEAP: 2055</pre><pre><b>Issue Description:</b>&nbsp;</pre><pre>Some Sun Blade 100 systems fail to automatically restart subsequent to site
+power failures and resumption (AC power cycling), and therefore must be
+restarted manually.
+
+Root cause was isolated to the the M1535D ALi Southbridge chip power management
+unit (PMU) circuitry on the motherboard.  This circuitry is responsible for
+latching current state of power - standby or on.  Upon loss of power,  previous
+state is retained in a PMU register by external battery power.  PMU register
+values were being intermittently corrupted during the power cycle event.  The
+motherboard PMU circuitry has been modified to be more robust.
+
+Corrective Action was made available in manufacturing on August 05, 2002
+via ECO W0_24091 by releasing part number 375-3106-01.  Corrective Action
+was made available in Sun Services on August 29, 2002 via LEAP# 2055.</pre><pre><b>Parts Affected:</b>&nbsp;</pre><pre>September 30, 2004</pre><pre><b>Implementation:</b>&nbsp;</pre><pre>---
+|   |   MANDATORY (Fully Pro-Active)
+ ---
+
+ ---
+|   |   CONTROLLED PRO-ACTIVE (per Sun Geo Plan)
+ ---
+
+ ---
+| X |   UPON FAILURE
+ ---</pre><pre><b>Replacement Time Estimate:</b>&nbsp;</pre><pre>0.5 hours</pre><pre><b>Special Considerations:</b>&nbsp;</pre><pre></pre><pre><b>Corrective Action:</b>&nbsp;</pre><pre>Upon Failure replace;
+
+      375-0096-01 with 375-3106-01
+      375-3061-01 with 375-3106-01
+      375-3092-01 with 375-3106-01
+      375-3123-01 with 375-3106-01
+
+Move any existing Chassis Tray from defective to
+replacement motherboard.</pre><pre><b>Comments:</b>&nbsp;</pre><pre></pre><pre><b>Billing Type:</b>&nbsp;</pre><pre>Warranty: Sun will provide parts at no charge under Warranty
+           Service. On-Site Labor Rates are based on how the
+           system was initially installed.
+
+ Contract: Sun will provide parts at no charge. On-Site Labor Rates
+           are based on the type of service contract.
+
+ Non Contract: Sun will provide parts at no charge. Installation by
+               Sun is available based on the On-Site Labor Rates
+               defined in the Price List.
+
+--------------------------------------------------------------------------</pre><pre><b>Implementation Footnote:</b>&nbsp;</pre><pre>________________________
+
+i)   In case of Mandatory FCOs, Sun Services will attempt to contact
+      all known customers to recommend the part upgrade.
+
+ii)  For controlled proactive swap FCOs, Sun Services mission critical
+     support teams will initiate proactive swap efforts for their respective
+     accounts, as required.
+
+iii) For Replace upon Failure FCOs, Sun Services partners will implement
+     the necessary corrective actions as and when they are required.
+
+--------------------------------------------------------------------------
+
+All released FINs and FCOs can be accessed using your favorite network
+browser as follows:
+
+SunWeb Access:
+______________
+
+* Access the top level URL of <a href="http://sdpsweb.EBay/FIN_FCO/">http://sdpsweb.EBay/FIN_FCO/</a>
+
+* From there, select the appropriate link to query or browse the FIN and
+  FCO Homepage collections.
+
+SunSolve Online Access:
+_______________________
+
+* Access the SunSolve Online URL at <a href="http://sunsolve.Central/">http://sunsolve.Central/</a>
+
+* From there, select the appropriate link to browse the FIN or FCO index.
+
+Internet Access:
+_______________
+
+* Access the top level URL of <a href="https://infoserver.Sun.COM">https://infoserver.Sun.COM</a>
+
+--------------------------------------------------------------------------
+General:
+________
+
+Send questions or comments to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="385e51565e5b5715555956595f5d4a786b4d56167b7775">[email&#160;protected]</a>
+
+---------------------------------------------------------------------------</pre><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr><td width="25%" valign="top" bgcolor="#999999"><font size="2" color="#ffffff"><b>Status</b></font></td><td width="75%" valign="top" bgcolor="#cccccc"><font size="2">inactive</font></td></tr></table><p></p><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"8700f4b74f6c42159eb0e541341024d0","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>

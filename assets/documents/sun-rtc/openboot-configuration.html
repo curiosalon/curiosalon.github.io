@@ -1,0 +1,4390 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+<META NAME="GENERATOR" CONTENT="Adobe FrameMaker 6.0/HTML Export Filter">
+<LINK REL="STYLESHEET" HREF="str_styles.css" CHARSET="ISO-8859-1" TYPE="text/css">
+<TITLE>C H A P T E R - 3
+</TITLE>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></HEAD>
+<BODY BGCOLOR="#ffffff">
+<DIV>
+<div class="navbar" align="center">
+<table width=100% cellpadding="0" cellspacing="0" border="0">
+<tr bgcolor="#cccccc">
+<td class="navbartitle" align=left>
+&nbsp;&nbsp;OpenBood 3.x Command Reference Manual
+<td valign="top" align="right">
+<a href="index.html">
+<img src="shared/toc01.gif" alt="Contents" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="boottest.html">
+<img src="shared/prev01.gif" alt="Previous" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="fthtools.html">
+<img src="shared/next01.gif" alt="Next" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="ix.html">
+<img src="shared/index01.gif" alt="Index" width="30" height="26" border="0" vspace="0"
+</a>
+</td>
+</tr>
+</table>
+<br>
+<br>
+</div>
+</DIV>
+<DIV CLASS="Chapter">
+<A NAME="Z40003a02430">
+</A>
+<A NAME="elementId-9264">
+</A>
+<A NAME="pgfId-9270">
+</A>
+<TABLE WIDTH=100% BORDER=0><TR><TD ALIGN=right CLASS="ChapNumber"><SPAN CLASS="ChapNumPrefix">C H A P T E R </SPAN><SPAN CLASS="ChapNumNum">3<A NAME="92307"></A></SPAN></TD></TR></TABLE>
+<TABLE WIDTH=100% BORDER=0><TR><TD ALIGN=right CLASS="ChapTitle"><HR SIZE=7 NOSHADE><A NAME="Z40003a02439"></A><A NAME="pgfId-9281"></A><A NAME="58519"></A><A NAME="51949"></A>Setting Configuration Variables</TD></TR></TABLE>
+<P CLASS="Para">
+<A NAME="pgfId-9285">
+</A>This chapter describes how to access and modify non-volatile RAM (NVRAM) configuration variables.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-9292">
+</A>System configuration variables are stored in the system NVRAM
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16266">
+</A>
+</KBD>
+. These variables determine the start-up machine configuration and related communication characteristics. You can modify the values of the configuration variables, and any changes you make remain in effect even after a power cycle. Configuration variables should be adjusted cautiously.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-9297">
+</A>The procedures described in this chapter assume that the user interface is active. See 
+<A HREF="overview.html#26656" CLASS="XRef">Chapter 1
+</A> for information about entering the user interface.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-9315">
+</A> 
+<A HREF="cfg-var.html#Z40003a0246f" CLASS="XRef">
+</A> lists a typical set of NVRAM configuration variables defined by 
+<I CLASS="Italic">
+IEEE Standard 1275-1994
+</I>
+. 
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a02468">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-9326"></A>TABLE 3-1 	<A NAME="38738"></A>Standard Configuration Variables</CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9338">
+</A>Variable 
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9345">
+</A>Typical Default
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9352">
+</A>Description
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9362">
+</A>auto-boot?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16270">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9369">
+</A>true
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9376">
+</A>If true, boot automatically after power on or reset.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9386">
+</A>boot-command
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16272">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9393">
+</A>boot
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9404">
+</A>Command that is executed if 
+<KBD CLASS="Filename | Command">
+auto-boot?
+</KBD>
+ is true.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9414">
+</A>boot-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16274">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9421">
+</A>disk net
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9428">
+</A>Device from which to boot.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9438">
+</A>boot-file
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16276">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9445">
+</A>empty string
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9452">
+</A>Arguments passed to booted program.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9462">
+</A>diag-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16278">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9469">
+</A>net
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9476">
+</A>Diagnostic boot source device. 
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9486">
+</A>diag-file
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16287">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9493">
+</A>empty string
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9500">
+</A>Arguments passed to booted program in diagnostic mode.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9510">
+</A>diag-switch?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16289">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9517">
+</A>false
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9524">
+</A>If true, run in diagnostic mode.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9534">
+</A>fcode-debug?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16291">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9541">
+</A>false
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9548">
+</A>If true, include name fields for plug-in device FCodes.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9558">
+</A>input-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16293">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9565">
+</A>keyboard
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9584">
+</A>Console input device (usually 
+<KBD CLASS="Filename | Command">
+keyboard
+</KBD>
+, 
+<KBD CLASS="Filename | Command">
+ttya
+</KBD>
+, or 
+<KBD CLASS="Filename | Command">
+ttyb
+</KBD>
+).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9594">
+</A>nvramrc
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16295">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9601">
+</A>empty
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9612">
+</A>Contents of NVRAMRC
+<KBD CLASS="Command">
+.
+</KBD>
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9622">
+</A>oem-banner
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16297">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9629">
+</A>empty string
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9640">
+</A>Custom OEM banner (enabled by 
+<KBD CLASS="Filename | Command">
+oem-banner? true
+</KBD>
+).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9650">
+</A>oem-banner?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16299">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9657">
+</A>false
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9664">
+</A>If true, use custom OEM banner.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9674">
+</A>oem-logo
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16301">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9681">
+</A>no default
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9692">
+</A>Byte array custom OEM logo (enabled by 
+<KBD CLASS="Filename | Command">
+oem-logo? true
+</KBD>
+). 
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-9697">
+</A>Displayed in hexadecimal.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9707">
+</A>oem-logo?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16303">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9714">
+</A>false
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9721">
+</A>If true, use custom OEM logo (else, use Sun logo).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9731">
+</A>output-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16305">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9738">
+</A>screen
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9757">
+</A>Console output device (usually 
+<KBD CLASS="Filename | Command">
+screen
+</KBD>
+, 
+<KBD CLASS="Filename | Command">
+ttya
+</KBD>
+, or 
+<KBD CLASS="Filename | Command">
+ttyb
+</KBD>
+).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9767">
+</A>screen-#columns
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16307">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9774">
+</A>80
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9781">
+</A>Number of on-screen columns (characters/line).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9791">
+</A>screen-#rows
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16309">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9798">
+</A>34
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9805">
+</A>Number of on-screen rows (lines). 
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9814">
+</A>security-#badlogins
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16323">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9822">
+</A>no default
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9829">
+</A>Number of incorrect security password attempts.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9839">
+</A>security-mode
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16325">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9846">
+</A>none
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9865">
+</A>Firmware security level (options: 
+<KBD CLASS="Filename | Command">
+none
+</KBD>
+, 
+<KBD CLASS="Filename | Command">
+command
+</KBD>
+, or 
+<KBD CLASS="Filename | Command">
+full
+</KBD>
+).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9874">
+</A>security-password
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16327">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9882">
+</A>no default
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9889">
+</A>Firmware security password (never displayed). 
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9899">
+</A>use-nvramrc?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16329">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9906">
+</A>false
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9913">
+</A>If true, execute commands in NVRAMRC during system start-up.
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-9925">
+</A>An dditional configuration variable is defined by the SBus binding to 
+<I CLASS="Italic">
+IEEE Standard 1275-1994
+</I>
+. The variable is shown in 
+<A HREF="cfg-var.html#Z40003a026d5" CLASS="XRef">
+</A>. 
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a026ce">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-9940"></A>TABLE 3-2 	<A NAME="58881"></A>SBus Configuration Variable </CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9952">
+</A>Variable 
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9959">
+</A>Typical Default
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-9966">
+</A>Description
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-9976">
+</A>sbus-probe-list
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16331">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9983">
+</A>0123
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-9990">
+</A>Which SBus slots to probe and in what order.
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-10000"></A><SPAN CLASS="Para">Different OpenBoot implementations may use different defaults and/or different configuration variables.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Sect1">
+<A NAME="Z40003a02715">
+</A>
+<A NAME="pgfId-10013">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a02718"></A><A NAME="marker-10009"></A>Displaying and Changing Variable Settings<KBD CLASS="Filename | Command"><A NAME="marker-16333"></A></KBD><KBD CLASS="Filename | Command"><A NAME="marker-16336"></A></KBD><KBD CLASS="Filename | Command"><A NAME="marker-16338"></A></KBD></CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-10018">
+</A>NVRAM configuration variables can be viewed and changed using the commands listed in 
+<A HREF="cfg-var.html#Z40003a02730" CLASS="XRef">
+</A>. 
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a02729">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-10031"></A>TABLE 3-3 	<A NAME="37272"></A>Viewing or Changing Configuration Variables </CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-10041">
+</A>Command 
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-10048">
+</A>Description
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Command">
+<A NAME="pgfId-10058">
+</A>printenv
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10065">
+</A>Display current variables and current default values. 
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10078">
+</A>
+<KBD CLASS="Filename | Command">
+printenv
+</KBD>
+ 
+<I CLASS="Replaceable">
+variable
+</I>
+ shows the current value of the named variable.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-10084">
+</A>setenv 
+</KBD>
+<I CLASS="Replaceable">
+variable value
+</I>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10099">
+</A>Set 
+<I CLASS="Replaceable">
+variable
+</I>
+ to the given decimal or text 
+<I CLASS="Replaceable">
+value
+</I>
+. 
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10104">
+</A>(Changes are permanent, but often take effect only after a reset.)
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-10110">
+</A>set-default 
+</KBD>
+<I CLASS="Replaceable">
+variable
+</I>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10121">
+</A>Reset the value of 
+<I CLASS="Replaceable">
+variable
+</I>
+ to the factory default.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-10127">
+</A>set-defaults
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16340">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10134">
+</A>Reset variable values to the factory defaults.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-10138">
+</A>password
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10145">
+</A>Set security-password
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-10153">
+</A>The following pages show how these commands can be used.
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-10169"></A><SPAN CLASS="Para">Solaris provides the <KBD CLASS="Command">eeprom</KBD> utility for modifying OpenBoot configuration variables.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-10235">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16481">
+</A>
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16342">
+</A>
+</KBD>
+To display a list of the current variable settings on your system, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10183">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15361">
+</A>
+<A NAME="pgfId-15369">
+</A>ok 
+<KBD CLASS="UserInput">
+printenv 
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15372">
+</A>
+<A NAME="pgfId-15374">
+</A>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16349">
+</A>
+<A NAME="pgfId-15375">
+</A>Variable Name	Value	Default Value
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16355">
+</A>
+<A NAME="pgfId-16351">
+</A>oem-logo	2c 31 2c 2d 00 00 00 00 ...
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16361">
+</A>
+<A NAME="pgfId-16357">
+</A>oem-logo?	false	false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16367">
+</A>
+<A NAME="pgfId-16363">
+</A>oem-banner
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16373">
+</A>
+<A NAME="pgfId-16369">
+</A>oem-banner?	false	false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16379">
+</A>
+<A NAME="pgfId-16375">
+</A>output-device	ttya	screen
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16385">
+</A>
+<A NAME="pgfId-16381">
+</A>input-device	ttya	keyboard
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16391">
+</A>
+<A NAME="pgfId-16387">
+</A>sbus-probe-list	03	0123
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16397">
+</A>
+<A NAME="pgfId-16393">
+</A>diag-file
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16403">
+</A>
+<A NAME="pgfId-16399">
+</A>diag-device	net	net
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16409">
+</A>
+<A NAME="pgfId-16405">
+</A>boot-file
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16415">
+</A>
+<A NAME="pgfId-16411">
+</A>boot-device	disk	disk net
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16421">
+</A>
+<A NAME="pgfId-16417">
+</A>auto-boot?	false	true
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16427">
+</A>
+<A NAME="pgfId-16423">
+</A>fcode-debug?	true	false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16433">
+</A>
+<A NAME="pgfId-16429">
+</A>use-nvramrc?	false	false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16439">
+</A>
+<A NAME="pgfId-16435">
+</A>nvramrc
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16445">
+</A>
+<A NAME="pgfId-16441">
+</A>screen-#columns	80	80
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16451">
+</A>
+<A NAME="pgfId-16447">
+</A>screen-#rows	34	34
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16457">
+</A>
+<A NAME="pgfId-16453">
+</A>security-mode	none	none
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16463">
+</A>
+<A NAME="pgfId-16459">
+</A>security-password
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16469">
+</A>
+<A NAME="pgfId-16465">
+</A>security-#badlogins	0
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16475">
+</A>
+<A NAME="pgfId-16471">
+</A>diag-switch?	true	false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-16480">
+</A>
+<A NAME="pgfId-16476">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10239">
+</A>In the displayed, formatted list of the current settings, numeric variables are often shown in decimal.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10280">
+</A>To change a variable setting, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10246">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10253">
+</A>
+<A NAME="pgfId-10275">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv
+</KBD>
+<KBD CLASS="Command">
+ 
+</KBD>
+<I CLASS="Replaceable">
+variable-name
+</I>
+<KBD CLASS="Filename | Command">
+ 
+</KBD>
+<I CLASS="Replaceable">
+value
+</I>
+ 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10292">
+</A>
+<I CLASS="Italic">
+variable-name
+</I>
+ is the name of the variable. 
+<I CLASS="Italic">
+value
+</I>
+ is a numeric value or text string appropriate to the named variable. A numeric value is interpreted as a decimal number, unless preceded by 
+<KBD CLASS="Command">
+0x
+</KBD>
+, which is the qualifier for a hexadecimal number.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10340">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16490">
+</A>
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16487">
+</A>
+</KBD>
+For example, to set the
+<KBD CLASS="Command">
+ auto-boot?
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16483">
+</A>
+</KBD>
+variable to 
+<KBD CLASS="Command">
+false
+</KBD>
+, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10313">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10320">
+</A>
+<A NAME="pgfId-10330">
+</A>ok setenv auto-boot? false
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10333">
+</A>
+<A NAME="pgfId-10335">
+</A>ok 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-10350"></A><SPAN CLASS="Para"><I CLASS="Italic">Many variable changes do not affect the operation of the firmware until the next power cycle or system reset</I> at which time the firmware uses the variable's new value.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-10363">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16492">
+</A>
+</KBD>
+You can reset one or most of the variables to the original defaults using the 
+<KBD CLASS="Command">
+set-default
+</KBD>
+ 
+<I CLASS="Italic">
+variable
+</I>
+ and 
+<KBD CLASS="Command">
+set-defaults
+</KBD>
+ commands.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10411">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16495">
+</A>
+</KBD>
+For example, to reset the
+<KBD CLASS="Command">
+ auto-boot?
+</KBD>
+ variable to its default setting (true), type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10386">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10393">
+</A>
+<A NAME="pgfId-10401">
+</A>ok s
+<KBD CLASS="UserInput">
+et-default auto-boot?
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10404">
+</A>
+<A NAME="pgfId-10406">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10442">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16498">
+</A>
+</KBD>
+To reset most variables to their default settings, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10417">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10424">
+</A>
+<A NAME="pgfId-10432">
+</A>ok 
+<KBD CLASS="UserInput">
+set-defaults
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10435">
+</A>
+<A NAME="pgfId-10437">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10446">
+</A>On SPARC systems, it is possible to reset the NVRAM variables to their default settings by holding down Stop-N 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16501">
+</A>
+</KBD>
+while the machine is powering up. When issuing this command, hold down Stop-N immediately after turning on the power to the SPARC system, and keep it pressed for a few seconds or until you see the banner (if the display is available). This is a good technique to force a SPARC compatible machine's NVRAM variables to a known condition.
+</P>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a028d5">
+</A>
+<A NAME="pgfId-10461">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a028d8"></A><KBD CLASS="Filename | Command"><A NAME="marker-16505"></A></KBD><A NAME="27756"></A>Setting Security Variables</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-10466">
+</A>The NVRAM system security variables are:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-10484">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+security-mode
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16508">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-10499">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+security-password
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16510">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-10515">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+security-#badlogins
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16512">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-10523">
+</A>
+<KBD CLASS="Command">
+security-mode
+</KBD>
+ can restrict the set of operations that users are allowed to perform from the User Interface. The three security modes, and their available commands, are listed in the following table in the order of most to least secure.
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a0291e">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-10533"></A>TABLE 3-4 	<A NAME="57847"></A>Commands Available for <I CLASS="Italic"><A NAME="pgfId-10533"></A>security-mode</I> Settings</CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-10543">
+</A>Mode
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-10550">
+</A>Commands
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10562">
+</A>
+<KBD CLASS="Command">
+full
+</KBD>
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10573">
+</A>All commands except for 
+<KBD CLASS="Filename | Command">
+go
+</KBD>
+ require the password.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10585">
+</A>
+<KBD CLASS="Command">
+command
+</KBD>
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10600">
+</A>All commands except for 
+<KBD CLASS="Filename | Command">
+boot
+</KBD>
+ and 
+<KBD CLASS="Filename | Command">
+go
+</KBD>
+ require the password.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10612">
+</A>
+<KBD CLASS="Command">
+none
+</KBD>
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-10619">
+</A>No password required (default).
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+<P CLASS="Sect2">
+<A NAME="Z40003a02981">
+</A>
+<A NAME="pgfId-10632">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a02984"></A><KBD CLASS="Filename | Command"><A NAME="marker-16514"></A></KBD>Command Security</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-10649">
+</A>With 
+<KBD CLASS="Command">
+security-mode
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16517">
+</A>
+</KBD>
+set to 
+<KBD CLASS="Command">
+command
+</KBD>
+:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-10663">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+A password is not required if you type the 
+<KBD CLASS="Command">
+boot
+</KBD>
+ command by itself. However, if you use the 
+<KBD CLASS="Command">
+boot
+</KBD>
+ command 
+<I CLASS="Italic">
+with an argument
+</I>
+, a password is required. 
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-10691">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+The 
+<KBD CLASS="Command">
+go
+</KBD>
+ command never asks for a password. 
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-10704">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+A password is required to execute any other command. 
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-10843">
+</A>Examples are shown in the following screen.
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10710">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10717">
+</A>
+<A NAME="pgfId-10737">
+</A>ok 
+<KBD CLASS="Filename | Command">
+boot
+</KBD>
+<KBD CLASS="Command">
+	
+</KBD>
+<I CLASS="Italic">
+<I CLASS="Italic">
+				(
+</I>
+no password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10740">
+</A>
+<A NAME="pgfId-10760">
+</A>ok 
+<KBD CLASS="Filename | Command">
+go
+</KBD>
+<I CLASS="Italic">
+<I CLASS="Italic">
+<I CLASS="Italic">
+	
+</I>
+				(
+</I>
+no password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10763">
+</A>
+<A NAME="pgfId-10781">
+</A>ok boot 
+<I CLASS="Replaceable">
+filename	
+</I>
+ 				
+<I CLASS="Italic">
+(password required)
+</I>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10784">
+</A>
+<A NAME="pgfId-10794">
+</A>Password:					
+<I CLASS="Italic">
+(password is not echoed as it is typed)
+</I>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10797">
+</A>
+<A NAME="pgfId-10821">
+</A>ok
+<KBD CLASS="UserInput">
+ 
+</KBD>
+<KBD CLASS="Filename | Command">
+reset-all
+</KBD>
+					
+<I CLASS="Italic">
+(password required)
+</I>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10824">
+</A>
+<A NAME="pgfId-10838">
+</A>Password:	
+<I CLASS="Italic">
+				(password is not echoed as it is typed)
+</I>
+ 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="Caution" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD><IMG SRC="figures/cfg-var-1.gif"></TD>
+<TD><B>Caution - </B><A NAME="pgfId-15563"></A><SPAN CLASS="Para">It is important to remember your security password and to set the security password <I CLASS="Italic">before</I> setting the security mode. If you forget this password, you cannot use your system; you must call your vendor's customer support service to make your machine bootable again.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-10871">
+</A>To set the security password and 
+<KBD CLASS="Command">
+command
+</KBD>
+ security mode, type the following at the 
+<KBD CLASS="Command">
+ok
+</KBD>
+ prompt: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-10882">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10889">
+</A>
+<A NAME="pgfId-10901">
+</A>ok
+<KBD CLASS="UserInput">
+ password 
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10904">
+</A>
+<A NAME="pgfId-10906">
+</A>ok New password (only first 8 chars are used):
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10909">
+</A>
+<A NAME="pgfId-10911">
+</A>ok Retype new password:
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10914">
+</A>
+<A NAME="pgfId-10922">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv security-mode command 
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-10925">
+</A>
+<A NAME="pgfId-10927">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10937">
+</A>The security password you assign must be between zero and eight characters. Any characters after the eighth are ignored. You do not have to reset the system; the security feature takes effect as soon as you type the command.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-10942">
+</A>If you enter an incorrect security password, there will be a delay of about 10 seconds before the next boot prompt appears. The number of times that an incorrect security password is typed is stored in the 
+<KBD CLASS="Command">
+security-#badlogins
+</KBD>
+ variable. 
+</P>
+</P>
+<P CLASS="Sect2">
+<A NAME="Z40003a02ac7">
+</A>
+<A NAME="pgfId-10957">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a02aca"></A> Full Security</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-10980">
+</A>The
+<KBD CLASS="Command">
+ full
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16521">
+</A>
+</KBD>
+security mode is the most restrictive. With 
+<KBD CLASS="Command">
+security-mode
+</KBD>
+ set to 
+<KBD CLASS="Command">
+full
+</KBD>
+:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-10999">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+A password is required any time you execute the 
+<KBD CLASS="Command">
+boot
+</KBD>
+ command. 
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-11018">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+The 
+<KBD CLASS="Command">
+go
+</KBD>
+ command never asks for a password. 
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-11031">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+A password is required to execute any other command. 
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-11183">
+</A>Here are some examples. 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11037">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11044">
+</A>
+<A NAME="pgfId-11064">
+</A>
+<KBD CLASS="Filename | Command">
+ok 
+</KBD>
+<KBD CLASS="UserInput">
+go
+</KBD>
+<I CLASS="Italic">
+					(no password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11067">
+</A>
+<A NAME="pgfId-11087">
+</A>
+<KBD CLASS="Filename | Command">
+ok 
+</KBD>
+<KBD CLASS="UserInput">
+boot
+</KBD>
+<KBD CLASS="Command">
+	
+</KBD>
+<I CLASS="Italic">
+				(password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11090">
+</A>
+<A NAME="pgfId-11100">
+</A>
+<KBD CLASS="Filename | Command">
+Password:
+</KBD>
+<I CLASS="Italic">
+				(password is not echoed as it is typed
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11103">
+</A>
+<A NAME="pgfId-11121">
+</A>
+<KBD CLASS="Filename | Command">
+ok 
+</KBD>
+<KBD CLASS="UserInput">
+boot 
+</KBD>
+<I CLASS="Replaceable">
+filename
+</I>
+<I CLASS="Italic">
+ 					(password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11124">
+</A>
+<A NAME="pgfId-11134">
+</A>
+<KBD CLASS="Filename | Command">
+Password:
+</KBD>
+<I CLASS="Italic">
+				(password is not echoed as it is typed
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11137">
+</A>
+<A NAME="pgfId-11161">
+</A>
+<KBD CLASS="Filename | Command">
+ok 
+</KBD>
+<KBD CLASS="UserInput">
+reset-all
+</KBD>
+<I CLASS="Italic">
+					(password required
+</I>
+)
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11164">
+</A>
+<A NAME="pgfId-11178">
+</A>
+<KBD CLASS="Filename | Command">
+Password:
+</KBD>
+	
+<I CLASS="Italic">
+				(password is not echoed as it is typed
+</I>
+) 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="Caution" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD><IMG SRC="figures/cfg-var-2.gif"></TD>
+<TD><B>Caution - </B><A NAME="pgfId-16200"></A><SPAN CLASS="Para">It is important to remember your security password and to set the security password <I CLASS="Italic">before</I> setting the security mode.. If you forget this password, you cannot use your system; you must call your vendor's customer support service to make your machine bootable again.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-11263">
+</A>To set the security password and 
+<KBD CLASS="Command">
+full
+</KBD>
+ security, type the following at the 
+<KBD CLASS="Command">
+ok
+</KBD>
+ prompt: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11215">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11222">
+</A>
+<A NAME="pgfId-11232">
+</A>ok
+<KBD CLASS="UserInput">
+ password 
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11235">
+</A>
+<A NAME="pgfId-11237">
+</A>ok New password (only first 8 chars are used):
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11240">
+</A>
+<A NAME="pgfId-11242">
+</A>ok Retype new password:
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11245">
+</A>
+<A NAME="pgfId-11251">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv security-mode full 
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11254">
+</A>
+<A NAME="pgfId-11256">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+</P>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a02c02">
+</A>
+<A NAME="pgfId-11271">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a02c05"></A>Changing the Power-on Banner</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-16535">
+</A>The banner configuration variables are:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-16549">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+oem-banner
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16565">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-16562">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+oem-banner?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16567">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-11324">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16569">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-11340">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+oem-logo?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16571">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-11440">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16573">
+</A>
+</KBD>
+To view the power-on banner, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11346">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11353">
+</A>
+<A NAME="pgfId-11430">
+</A>ok banner 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11433">
+</A>
+<A NAME="pgfId-15466">
+</A>
+<KBD CLASS="Filename | Command">
+Sun Ultra 1 SBus (UltraSPARC 167 MHz),Keyboard Present
+</KBD>
+<KBD CLASS="Filename | Command">
+PROM Rev. 3.0, 64MB memory installed, Serial # 289
+</KBD>
+<KBD CLASS="Filename | Command">
+Ethernet address 8:0:20:d:e2:7b, Host ID: 80000121
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15485">
+</A>
+<A NAME="pgfId-15489">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11445">
+</A>The banner for your system may be different.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11449">
+</A>The banner consists of two parts: the text field and the logo (over serial ports, only the text field is displayed). You can replace the existing text field with a custom text message using the 
+<KBD CLASS="Command">
+oem-banner
+</KBD>
+ and 
+<KBD CLASS="Command">
+oem-banner?
+</KBD>
+ configuration variables.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11565">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16576">
+</A>
+</KBD>
+To insert a custom text field in the power-on banner, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11468">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11475">
+</A>
+<A NAME="pgfId-11481">
+</A>ok setenv oem-banner Hello Mom and Dad
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11484">
+</A>
+<A NAME="pgfId-11486">
+</A>ok setenv oem-banner? true
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11489">
+</A>
+<A NAME="pgfId-11555">
+</A>ok banner
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11558">
+</A>
+<A NAME="pgfId-15521">
+</A>
+<KBD CLASS="Literal">
+ Hello Mom and Dad
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15531">
+</A>
+<A NAME="pgfId-15540">
+</A>
+<KBD CLASS="Filename | Command">
+ok
+</KBD>
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11569">
+</A>The system displays the banner with your new message, as shown in the preceding screen.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11580">
+</A>The graphic logo is handled differently. 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ is a 512-byte array, containing a total of 4096 bits arranged in a 64 x 64 array. Each bit controls one pixel. The most significant bit (MSB) of the first byte controls the upper-left corner pixel. The next bit controls the pixel to the right of it, and so on.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11587">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16584">
+</A>
+</KBD>
+To create a new logo, first create a Forth array containing the correct data; then copy this array into 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+. The array is then installed in 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ with 
+<KBD CLASS="Command">
+$setenv
+</KBD>
+. The example below fills the top half of 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ with an ascending pattern.
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11606">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11613">
+</A>
+<A NAME="pgfId-11623">
+</A>ok
+<KBD CLASS="UserInput">
+ create logoarray d# 512 allot
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11626">
+</A>
+<A NAME="pgfId-11632">
+</A>ok 
+<KBD CLASS="UserInput">
+logoarray d# 256 0 do i over i + c! loop drop
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11635">
+</A>
+<A NAME="pgfId-11641">
+</A>ok 
+<KBD CLASS="UserInput">
+logoarray d# 256 &quot; oem-logo&quot; $setenv
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11644">
+</A>
+<A NAME="pgfId-11650">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv oem-logo? true
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11653">
+</A>
+<A NAME="pgfId-11659">
+</A>ok 
+<KBD CLASS="UserInput">
+banner
+</KBD>
+ 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11677">
+</A>To restore the system's original power-on banner, set the 
+<KBD CLASS="Command">
+oem-logo?
+</KBD>
+ and 
+<KBD CLASS="Command">
+oem-banner?
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16579">
+</A>
+</KBD>
+variables to 
+<KBD CLASS="Command">
+false
+</KBD>
+. 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11690">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11697">
+</A>
+<A NAME="pgfId-11707">
+</A>ok
+<KBD CLASS="UserInput">
+ setenv oem-logo? false
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11710">
+</A>
+<A NAME="pgfId-11716">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv oem-banner? false
+</KBD>
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11719">
+</A>
+<A NAME="pgfId-11721">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11737">
+</A>Because the 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ array is so large, 
+<KBD CLASS="Command">
+printenv
+</KBD>
+ displays approximately the first 8 bytes (in hexadecimal). To display the entire array, use the phrase 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ 
+<KBD CLASS="Command">
+dump
+</KBD>
+. The 
+<KBD CLASS="Command">
+oem-logo
+</KBD>
+ array is not erased by 
+<KBD CLASS="Command">
+set-defaults
+</KBD>
+, since it might be difficult to restore the data. However, 
+<KBD CLASS="Command">
+oem-logo?
+</KBD>
+ is set to false when 
+<KBD CLASS="Command">
+set-defaults
+</KBD>
+ executes, so the custom logo is no longer displayed.
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-11776"></A><SPAN CLASS="Para">Some systems do not support the <KBD CLASS="Command">oem-logo</KBD> feature.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a02e03">
+</A>
+<A NAME="pgfId-11784">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a02e06"></A>Input and Output Control</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-11788">
+</A>The console is used as the primary means of communication between OpenBoot and the user. The console consists of an input device, used for receiving information supplied by the user, and an output device, used for sending information to the user. Typically, the console is either the combination of a text/graphics display device and a keyboard or an ASCII terminal connected to a serial port.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11794">
+</A>The configuration variables related to the control of the console are:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-11812">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+input-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16587">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-11827">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+output-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16589">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-11842">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+screen-#columns
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16591">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-11858">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+screen-#rows
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16593">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-11862">
+</A>You can use these variables to assign the power-on defaults for the console.   These values do not take effect until after the next power cycle or system reset.
+</P>
+<P CLASS="Sect2">
+<A NAME="Z40003a02e5a">
+</A>
+<A NAME="pgfId-11871">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a02e5d"></A>Selecting Input and Output Device Options</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-11887">
+</A>The 
+<KBD CLASS="Command">
+input-device
+</KBD>
+ and 
+<KBD CLASS="Command">
+output-device
+</KBD>
+ variables control the firmware's selection of input and output devices after a power-on reset. The default 
+<KBD CLASS="Command">
+input-device
+</KBD>
+ value is 
+<KBD CLASS="Filename | Command">
+keyboard
+</KBD>
+ and the default 
+<KBD CLASS="Command">
+output-device
+</KBD>
+ value is 
+<KBD CLASS="Filename | Command">
+screen
+</KBD>
+. The values of 
+<KBD CLASS="Command">
+input-device
+</KBD>
+ and 
+<KBD CLASS="Command">
+output-device
+</KBD>
+ must be device specifiers. The aliases 
+<KBD CLASS="Command">
+keyboard
+</KBD>
+ and 
+<KBD CLASS="Command">
+screen
+</KBD>
+ are often used as the values of these variables.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11924">
+</A>When the system is reset, the named device becomes the initial firmware console input or output device. (If you want to temporarily change the input or output device, use the 
+<KBD CLASS="Filename | Command">
+input
+</KBD>
+ or 
+<KBD CLASS="Filename | Command">
+output
+</KBD>
+ commands described in 
+<A HREF="fthtools.html#19649" CLASS="XRef">Chapter 4
+</A>)
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11972">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16595">
+</A>
+</KBD>
+To set 
+<KBD CLASS="Command">
+ttya
+</KBD>
+ as the initial console input device, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-11949">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11956">
+</A>
+<A NAME="pgfId-11962">
+</A>ok setenv input-device ttya
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-11965">
+</A>
+<A NAME="pgfId-11967">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-11984">
+</A>If you select 
+<KBD CLASS="Command">
+keyboard
+</KBD>
+ for 
+<KBD CLASS="Command">
+input-device
+</KBD>
+, and the device is not plugged in, input is accepted from a fallback device (typically 
+<KBD CLASS="Command">
+ttya
+</KBD>
+) after the next power cycle or system reset. If you select 
+<KBD CLASS="Command">
+screen
+</KBD>
+ for 
+<KBD CLASS="Command">
+output-device
+</KBD>
+, but no frame buffer is available, output is sent to the fall-back device after the next power cycle or system reset.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12001">
+</A>To specify an SBus frame buffer as the default output device (especially if there are multiple frame buffers in the system), type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-12004">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12011">
+</A>
+<A NAME="pgfId-12017">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv output-device /sbus/SUNW,leo
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12020">
+</A>
+<A NAME="pgfId-12022">
+</A>ok 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+</P>
+<P CLASS="Sect2">
+<A NAME="Z40003a02efe">
+</A>
+<A NAME="pgfId-12035">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a02f01"></A>Serial Port Characteristics</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-12043">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16598">
+</A>
+</KBD>
+The following values represent the typical range of communications characteristics for serial ports:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12063">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<I CLASS="Italic">
+baud
+</I>
+ = 110, 300, 1200, 2400, 4800, 9600, 19200, or 38400 bits/second
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12080">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<I CLASS="Italic">
+#bits
+</I>
+ = 5, 6, 7, or 8 (data bits)
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12097">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<I CLASS="Italic">
+parity 
+</I>
+= n (none), e (even), or o (odd), parity bit
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12114">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<I CLASS="Italic">
+#stop
+</I>
+ = 1 (1), .  (1.5), or 2 (2) stop bits
+</P>
+</LI>
+</UL>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-12121"></A><SPAN CLASS="Para">rts/cts and xon/xoff handshaking are not implemented on some systems. When a selected protocol is not implemented, the handshake variable is accepted but ignored; no messages are displayed.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+</P>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a02f60">
+</A>
+<A NAME="pgfId-12133">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a02f63"></A>Selecting Boot Options</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-12141">
+</A>You can use the following configuration variable to determine whether or not the system will boot automatically after a power cycle or system reset. 
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12161">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+auto-boot?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16601">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-12173">
+</A>If
+<KBD CLASS="Command">
+ auto-boot?
+</KBD>
+ is 
+<KBD CLASS="Command">
+true
+</KBD>
+ and if OpenBoot is not in diagnostic mode, the system boots automatically after a power-cycle or system reset using the 
+<KBD CLASS="Command">
+boot-device
+</KBD>
+ and 
+<KBD CLASS="Command">
+boot-file
+</KBD>
+ values.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12188">
+</A>These variables can also be used during manual booting to select the boot device and the program to be booted. For example, to specify default booting from the network server, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-12191">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12198">
+</A>
+<A NAME="pgfId-12208">
+</A>ok
+<KBD CLASS="UserInput">
+ setenv boot-device net
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12211">
+</A>
+<A NAME="pgfId-12213">
+</A>ok 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12233">
+</A>Changes to 
+<KBD CLASS="Command">
+boot-file 
+</KBD>
+and 
+<KBD CLASS="Command">
+boot-device
+</KBD>
+ take effect the next time that 
+<KBD CLASS="Command">
+boot
+</KBD>
+ is executed.
+</P>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a02fce">
+</A>
+<A NAME="pgfId-12243">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a02fd1"></A>Controlling Power-on Self-Test (POST)</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-12248">
+</A>The Power-on Testing variables are:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12266">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+diag-switch?
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16603">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12281">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+diag-device
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16605">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12296">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+diag-file
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16607">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12306">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+diag-level
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-12322">
+</A>Setting 
+<KBD CLASS="Command">
+diag-switch?
+</KBD>
+ to 
+<KBD CLASS="Command">
+true
+</KBD>
+ causes the function 
+<KBD CLASS="Command">
+diagnostic-mode?
+</KBD>
+ to return 
+<KBD CLASS="Command">
+true
+</KBD>
+. When 
+<KBD CLASS="Command">
+diagnostic-mode?
+</KBD>
+ returns 
+<KBD CLASS="Command">
+true
+</KBD>
+, the system:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12347">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Performs more thorough 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16609">
+</A>
+</KBD>
+self tests during any subsequent power-on or system reset process.
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12360">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+May display additional status messages (the details are implementation dependent).
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12373">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Uses different configuration variables for booting. (For more details on the effects on the boot process, see 
+<A HREF="boottest.html#43928" CLASS="XRef">Chapter 2
+</A>)
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-12392">
+</A>Most systems have a factory default of 
+<KBD CLASS="Command">
+false
+</KBD>
+ for the 
+<KBD CLASS="Command">
+diag-switch?
+</KBD>
+ variable. To set 
+<KBD CLASS="Command">
+diag-switch?
+</KBD>
+ to 
+<KBD CLASS="Command">
+true
+</KBD>
+, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-12403">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12410">
+</A>
+<A NAME="pgfId-12416">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv diag-switch? true
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12419">
+</A>
+<A NAME="pgfId-12421">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-12432"></A><SPAN CLASS="Para">Some systems have a hardware diagnostic switch that also cause <KBD CLASS="Command">diagnostic-mode?</KBD> to return <KBD CLASS="Command">true</KBD>. Such systems run the full tests at power-on and system reset if either the hardware switch is set or <KBD CLASS="Command">diag-switch?</KBD> is <KBD CLASS="Command">true</KBD>.</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<BR>
+<HR NOSHADE SIZE=1>
+<TABLE CLASS="TipNote" CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD></TD>
+<TD><B>Note - </B><A NAME="pgfId-12465"></A><SPAN CLASS="Para">Some implementations enable you to force <KBD CLASS="Command">diag-switch?</KBD> to <KBD CLASS="Command">true</KBD> by using an implementation-dependent key sequence during power-on. Check your system's documentation for details, or see <A HREF="trublapp.html#63500" CLASS="XRef">Appendix C</A>.&quot;</SPAN>
+</TD>
+</TR>
+</TABLE>
+<HR NOSHADE SIZE=1>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-12508">
+</A>To set 
+<KBD CLASS="Command">
+diag-switch?
+</KBD>
+ to 
+<KBD CLASS="Command">
+false
+</KBD>
+, type: 
+<DIV CLASS="InformalExample">
+<A NAME="elementId-12485">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12492">
+</A>
+<A NAME="pgfId-12498">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv diag-switch? false
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-12501">
+</A>
+<A NAME="pgfId-12503">
+</A>ok
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12512">
+</A>When not in diagnostic mode, the system does not announce the diagnostic tests as they are performed (unless a test fails) and may perform fewer tests.
+</P>
+</P>
+<P CLASS="Sect1">
+<A NAME="Z40003a030e5">
+</A>
+<A NAME="pgfId-12522">
+</A>
+<CAPTION CLASS="Head1"><HR size=5 width=125 noshade><A NAME="Z40003a030e8"></A>Using nvramrc</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-12536">
+</A>The 
+<KBD CLASS="Command">
+nvramrc
+</KBD>
+ configuration variable whose contents are called the 
+<I CLASS="Italic">
+script
+</I>
+, 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16613">
+</A>
+</KBD>
+can be used to store user-defined commands executed during start-up.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12545">
+</A>Typically, 
+<KBD CLASS="Command">
+nvramrc
+</KBD>
+ is used by a device driver to save start-up configuration variables, to patch device driver code, or to define installation-specific device configuration and device aliases. It can also be used for bug patches or for user-installed extensions. Commands are stored in ASCII, just as the user would type them at the console.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12558">
+</A>If the 
+<KBD CLASS="Command">
+use-nvramrc?
+</KBD>
+ configuration variable is 
+<KBD CLASS="Command">
+true
+</KBD>
+, the script is evaluated during the OpenBoot start-up sequence as shown:
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12572">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Perform power-on self-test (POST)
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12585">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Perform system initialization
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12602">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Evaluate the script (if 
+<KBD CLASS="Command">
+use-nvramrc?
+</KBD>
+ is true)
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12621">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Execute 
+<KBD CLASS="Command">
+probe-all
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16617">
+</A>
+</KBD>
+ (evaluate FCode)
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12640">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Execute 
+<KBD CLASS="Command">
+install-console
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16620">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12659">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Execute 
+<KBD CLASS="Command">
+banner
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16622">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12672">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Execute secondary diagnostics
+</P>
+</LI>
+</UL>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12689">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+Perform default boot (if 
+<KBD CLASS="Command">
+auto-boot?
+</KBD>
+ is true)
+</P>
+</LI>
+</UL>
+<P CLASS="Para">
+<A NAME="pgfId-12701">
+</A>It is sometimes desirable to modify the sequence 
+<KBD CLASS="Command">
+probe-all
+</KBD>
+ 
+<KBD CLASS="Command">
+install-console
+</KBD>
+ 
+<KBD CLASS="Command">
+banner
+</KBD>
+. For example, commands that modify the characteristics of plug-in display devices may need to be executed after the plug-in devices have been probed, but before the console device has been selected. Such commands would need to be executed between 
+<KBD CLASS="Command">
+probe-all
+</KBD>
+ and 
+<KBD CLASS="Command">
+install-console
+</KBD>
+. Commands that display output on the console would need to be placed after 
+<KBD CLASS="Command">
+install-console
+</KBD>
+ or 
+<KBD CLASS="Command">
+banner
+</KBD>
+.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12730">
+</A>This is accomplished by creating a custom script which contains either 
+<KBD CLASS="Command">
+banner
+</KBD>
+ or 
+<KBD CLASS="Command">
+suppress-banner
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16624">
+</A>
+</KBD>
+since the sequence 
+<KBD CLASS="Command">
+probe-all
+</KBD>
+ 
+<KBD CLASS="Command">
+install-console
+</KBD>
+ 
+<KBD CLASS="Command">
+banner
+</KBD>
+ is not executed if either 
+<KBD CLASS="Command">
+banner
+</KBD>
+ or 
+<KBD CLASS="Command">
+suppress-banner
+</KBD>
+ is executed from the script. This allows the use of 
+<KBD CLASS="Command">
+probe-all
+</KBD>
+, 
+<KBD CLASS="Command">
+install-console
+</KBD>
+ and 
+<KBD CLASS="Command">
+banner
+</KBD>
+ inside the script, possibly interspersed with other commands, without having those commands re-executed after the script finishes.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-12780">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16628">
+</A>
+</KBD>
+Most User Interface commands can be used in the script. 
+<I CLASS="Italic">
+The following cannot:
+</I>
+</P>
+<UL CLASS="ItemizedList">
+<A NAME="pgfId-12798">
+</A>
+<LI CLASS="ListItem">
+<P CLASS="Bullet1">
+<KBD CLASS="Filename | Command">
+boot
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16631">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12813">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+go
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16633">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12828">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+nvedit
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16636">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12847">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Filename | Command">
+password
+</KBD>
+<KBD CLASS="Command">
+ 
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16639">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12862">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+reset-all
+</KBD>
+ 
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16641">
+</A>
+</KBD>
+</P>
+</LI>
+<LI CLASS="ListItem">
+<A NAME="pgfId-12882">
+</A>
+<P CLASS="Bullet1">
+<KBD CLASS="Command">
+setenv
+</KBD>
+ 
+<KBD CLASS="Command">
+security-mode
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16644">
+</A>
+</KBD>
+</P>
+</LI>
+</UL>
+<P CLASS="Sect2">
+<A NAME="Z40003a03255">
+</A>
+<A NAME="pgfId-12892">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a03258"></A><KBD CLASS="Filename | Command"><A NAME="marker-16646"></A></KBD>Editing the Contents of the Script</CAPTION>
+<P CLASS="Para">
+<A NAME="pgfId-12900">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16649">
+</A>
+</KBD>
+The script editor, 
+<KBD CLASS="Command">
+nvedit
+</KBD>
+, lets you create and modify the script using the commands listed in 
+<A HREF="cfg-var.html#Z40003a03271" CLASS="XRef">
+</A>. 
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a0326b">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-12912"></A>TABLE 3-5 	Commands Affecting NVRAMAC<A NAME="21977"></A></CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-12922">
+</A>Command
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-12929">
+</A>Description
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-12939">
+</A>nvalias 
+</KBD>
+<I CLASS="Replaceable">
+alias device-path
+</I>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16652">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-12953">
+</A>Stores the command &quot;devalias 
+<I CLASS="Replaceable">
+alias
+</I>
+ 
+<I CLASS="Replaceable">
+device-path&quot;
+</I>
+ in the script. The alias persists until either 
+<KBD CLASS="Filename | Command">
+nvunalias
+</KBD>
+ or 
+<KBD CLASS="Filename | Command">
+set-defaults
+</KBD>
+ is executed.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-12968">
+</A>$nvalias
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16654">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-12978">
+</A>Performs the same function as 
+<KBD CLASS="Filename | Command">
+nvalias
+</KBD>
+ except that it takes its arguments, 
+<I CLASS="Replaceable">
+name-string 
+</I>
+and
+<I CLASS="Replaceable">
+ device-string
+</I>
+, from the stack.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-12993">
+</A>nvedit
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16656">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-12999">
+</A>Enters the script editor. If data remains in the temporary buffer from a previous 
+<KBD CLASS="Filename | Command">
+nvedit
+</KBD>
+ session, resumes editing those previous contents. If not, reads the contents of 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+ into the temporary buffer and begins editing it.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13014">
+</A>nvquit
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16658">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13020">
+</A>Discards the contents of the temporary buffer, without writing it to 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+. Prompts for confirmation.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13031">
+</A>nvrecover
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16660">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13041">
+</A>Recovers the contents of 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+ if they have been lost as a result of the execution of 
+<KBD CLASS="Filename | Command">
+set-defaults
+</KBD>
+; then enters the editor as with 
+<KBD CLASS="Filename | Command">
+nvedit
+</KBD>
+. 
+<KBD CLASS="Filename | Command">
+nvrecover
+</KBD>
+ fails if 
+<KBD CLASS="Filename | Command">
+nvedit
+</KBD>
+ is executed between the time that the 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+ contents were lost and the time that 
+<KBD CLASS="Filename | Command">
+nvrecover
+</KBD>
+ is executed.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13072">
+</A>nvrun
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16662">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13079">
+</A>Executes the contents of the temporary buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13085">
+</A>nvstore
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16664">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13095">
+</A>Copies the contents of the temporary buffer to 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+; discards the contents of the temporary buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13106">
+</A>nvunalias 
+</KBD>
+<I CLASS="Replaceable">
+alias
+</I>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16666">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13117">
+</A>Deletes the specified alias from 
+<KBD CLASS="Filename | Command">
+nvramrc
+</KBD>
+.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<KBD CLASS="Filename | Command">
+<A NAME="pgfId-13123">
+</A>$nvunalias
+</KBD>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16668">
+</A>
+</KBD>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-13133">
+</A>Performs the same function as 
+<KBD CLASS="Filename | Command">
+nvunalias
+</KBD>
+ except that it takes its argument, 
+<I CLASS="Replaceable">
+name-string
+</I>
+, from the stack.
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+<P CLASS="Para">
+<A NAME="pgfId-14338">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16670">
+</A>
+</KBD>
+The editing commands shown in 
+<A HREF="cfg-var.html#Z40003a03815" CLASS="XRef">
+</A> are used in the script editor.
+</P>
+<TABLE CLASS="Titled" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<A NAME="Z40003a0380c">
+</A>
+<CAPTION CLASS="TableCaption"><A NAME="pgfId-14356"></A>TABLE 3-6 	<A NAME="62397"></A>Script Editor Keystroke Commands </CAPTION>
+<THEAD CLASS="THead">
+<TR>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-14366">
+</A>Keystroke
+</P>
+</TH>
+<TH ROWSPAN="1" COLSPAN="1" BGCOLOR="#CCCCCC">
+<P CLASS="Para">
+<A NAME="pgfId-14373">
+</A>Description
+</P>
+</TH>
+</TR>
+</THEAD>
+<TBODY CLASS="Titled">
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14381">
+</A>Control-B
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14388">
+</A>Moves backward one character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14396">
+</A>Escape B
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14403">
+</A>Moves backward one word.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14411">
+</A>Control-F
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14418">
+</A>Moves forward one character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14426">
+</A>Escape F
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14433">
+</A>Moves forward one word.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14441">
+</A>Control-A
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14448">
+</A>Moves backward to beginning of the line.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14456">
+</A>Control-E
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14463">
+</A>Moves forward to end of the line.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14471">
+</A>Control-N
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14478">
+</A>Moves to the next line of the script editing buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14486">
+</A>Control-P
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14493">
+</A>Moves to the previous line of the script editing buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14501">
+</A>Return (Enter)
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14508">
+</A>Inserts a new line at the cursor position and advances to the next line.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14516">
+</A>Control-O
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14523">
+</A>Inserts a newline at the cursor position and stays on the current line.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14531">
+</A>Control-K
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14537">
+</A>Erases from the cursor position to the end of the line, storing the erased characters in a save buffer. If at the end of a line, joins the next line to the current line (i.e. deletes the newline).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14546">
+</A>Delete
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14553">
+</A>Erases the previous character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14561">
+</A>Backspace
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14568">
+</A>Erases the previous character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14576">
+</A>Control-H
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14583">
+</A>Erases the previous character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14591">
+</A>Escape H
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14597">
+</A>Erases from beginning of word to just before the cursor, storing erased characters in a save buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14606">
+</A>Control-W
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14612">
+</A>Erases from beginning of word to just before the cursor, storing erased characters in a save buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14621">
+</A>Control-D
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14628">
+</A>Erases the next character.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14636">
+</A>Escape D
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14643">
+</A>Erases from the cursor to the end of the word, storing the erased characters in a save buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14651">
+</A>Control-U
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14658">
+</A>Erases the entire line, storing the erased characters in a save buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14666">
+</A>Control-Y
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14673">
+</A>Inserts the contents of the save buffer before the cursor.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14681">
+</A>Control-Q
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14688">
+</A>Quotes the next character (i.e. allows you to insert control characters).
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14696">
+</A>Control-R
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14703">
+</A>Retypes the line.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14711">
+</A>Control-L
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14718">
+</A>Displays the entire contents of the editing buffer.
+</P>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14726">
+</A>Control-C
+</P>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<P CLASS="Para">
+<A NAME="pgfId-14732">
+</A>Exits the script editor, returning to the OpenBoot command interpreter. The temporary buffer is preserved, but is not written back to the script. (Use 
+<KBD CLASS="Filename | Command">
+nvstore
+</KBD>
+ afterwards to write it back.)
+</P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<BR>
+</P>
+<P CLASS="Sect2">
+<A NAME="Z40003a039a5">
+</A>
+<A NAME="pgfId-14762">
+</A>
+<CAPTION CLASS="Head2"><A NAME="Z40003a039a8"></A>Activating the Script</CAPTION>
+<P CLASS="Procedure">
+<A NAME="Z40003a039ad">
+</A>
+<A NAME="pgfId-14770">
+</A>
+<P CLASS="Para">
+Use the following steps to create and activate the script:
+</P>
+<P CLASS="Step">
+<A NAME="Z40003a039b5">
+</A>
+<A NAME="pgfId-14788">
+</A>At the 
+<KBD CLASS="Command">
+ok
+</KBD>
+ prompt, type 
+<KBD CLASS="Command">
+nvedit.
+</KBD>
+ 
+</P>
+</P>
+<P CLASS="Procedure">
+<A NAME="Z40003a039c7">
+</A>
+<A NAME="pgfId-14796">
+</A>
+<P CLASS="Para">
+Edit the script using editor commands.
+</P>
+<P CLASS="Step">
+<A NAME="Z40003a039cf">
+</A>
+<A NAME="pgfId-14814">
+</A>Type 
+<KBD CLASS="Filename | Command">
+Control-C
+</KBD>
+ to get out of the editor and back to the 
+<KBD CLASS="Command">
+ok
+</KBD>
+ prompt.
+</P>
+</P>
+<P CLASS="Procedure">
+<A NAME="Z40003a039e1">
+</A>
+<A NAME="pgfId-14829">
+</A>
+<P CLASS="Para">
+If you have not yet typed 
+<KBD CLASS="Command">
+nvstore
+</KBD>
+ to save your changes, you may type 
+<KBD CLASS="Command">
+nvrun
+</KBD>
+ to execute the contents of the temporary edit buffer.
+</P>
+<P CLASS="Step">
+<A NAME="Z40003a03af3">
+</A>
+<A NAME="pgfId-15101">
+</A>	1.	Type 
+<KBD CLASS="Command">
+nvstore
+</KBD>
+ to save your changes.
+</P>
+<P CLASS="Step">
+<A NAME="Z40003a03b00">
+</A>
+<A NAME="pgfId-15129">
+</A>	2.	Enable the interpretation of the script by typing:
+<DIV CLASS="InformalExample">
+<A NAME="elementId-15110">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15117">
+</A>
+<A NAME="pgfId-15123">
+</A>
+<KBD CLASS="UserInput">
+setenv use-nvramrc? true
+</KBD>
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Step">
+<A NAME="Z40003a03b1c">
+</A>
+<A NAME="pgfId-15166">
+</A>	3.	Type reset-all to reset the system and execute the script, or type:
+<DIV CLASS="InformalExample">
+<A NAME="elementId-15146">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15153">
+</A>
+<A NAME="pgfId-15159">
+</A>
+<KBD CLASS="UserInput">
+nvramrc evaluate
+</KBD>
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-15171">
+</A>to execute the contents directly.
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-14929">
+</A>
+<KBD CLASS="Filename | Command">
+<A NAME="marker-16673">
+</A>
+</KBD>
+The following example shows you how to create a simple colon definition in the script.
+<DIV CLASS="InformalExample">
+<A NAME="elementId-14932">
+</A>
+<DIV CLASS="Code">
+<TABLE CLASS="Code" BORDER=1 BORDERCOLORLIGHT="#FFFFFF" BORDERCOLORDARK="#000000" CELLPADDING=5 CELLSPACING=0>
+
+<TBODY CLASS="Code">
+<TR>
+<TD>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14939">
+</A>
+<A NAME="pgfId-14947">
+</A>ok 
+<KBD CLASS="UserInput">
+nvedit
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14950">
+</A>
+<A NAME="pgfId-14956">
+</A>0: 
+<KBD CLASS="UserInput">
+: hello ( -- )
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14959">
+</A>
+<A NAME="pgfId-14965">
+</A>1: 
+<KBD CLASS="UserInput">
+.&quot; Hello, world. &quot; cr
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14968">
+</A>
+<A NAME="pgfId-14974">
+</A>2: 
+<KBD CLASS="UserInput">
+;
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14977">
+</A>
+<A NAME="pgfId-14983">
+</A>3: 
+<KBD CLASS="UserInput">
+^C
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14986">
+</A>
+<A NAME="pgfId-14992">
+</A>ok 
+<KBD CLASS="UserInput">
+nvstore
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-14995">
+</A>
+<A NAME="pgfId-15001">
+</A>ok 
+<KBD CLASS="UserInput">
+setenv use-nvramrc? true
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15004">
+</A>
+<A NAME="pgfId-15010">
+</A>ok 
+<KBD CLASS="UserInput">
+reset-all
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15013">
+</A>
+<A NAME="pgfId-15015">
+</A>...
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15018">
+</A>
+<A NAME="pgfId-15024">
+</A>ok 
+<KBD CLASS="UserInput">
+hello
+</KBD>
+ 
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15027">
+</A>
+<A NAME="pgfId-15029">
+</A>Hello, world.
+</DIV>
+<DIV CLASS="LiteralLayout">
+<A NAME="elementId-15032">
+</A>
+<A NAME="pgfId-15034">
+</A>ok 
+</DIV>
+</TBODY>
+</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+</DIV>
+</P>
+<P CLASS="Para">
+<A NAME="pgfId-15046">
+</A>Notice the 
+<KBD CLASS="Command">
+nvedit
+</KBD>
+ line number prompts (0:, 1:, 2:, 3:) in the above example. These prompts are system-dependent. 
+</P>
+</P>
+</P>
+</DIV>
+<div class="navbar" align="center">
+<br>
+<br>
+<table width=100% cellpadding="0" cellspacing="0" border="0">
+<tr bgcolor="#cccccc">
+<td class="navbartitle" align=left>
+&nbsp;&nbsp;OpenBood 3.x Command Reference Manual
+<td class="navbartitle" align=right>
+<font size=2> 806-1377-10
+<td valign="top" align="right">
+<a href="index.html">
+<img src="shared/toc01.gif" alt="Contents" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="boottest.html">
+<img src="shared/prev01.gif" alt="Previous" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="fthtools.html">
+<img src="shared/next01.gif" alt="Next" width="30" height="26" border="0" vspace="0">
+</a>
+<a href="ix.html">
+<img src="shared/index01.gif" alt="Index" width="30" height="26" border="0" vspace="0"
+</a>
+</td>
+</tr>
+</table>
+<br>
+<br>
+</div>
+<h5>
+<a href="copyright.html">Copyright
+</a> &#169; 2001, Sun Microsystems, Inc.   All rights reserved.
+</h5>
+<!-- START SITECATALYST -->
+<!--stopindex-->
+<script language="JavaScript" src="/s_code_remote.js"></script>
+<!--startindex-->
+<!-- END SITECATALYST -->
+
+</BODY>
